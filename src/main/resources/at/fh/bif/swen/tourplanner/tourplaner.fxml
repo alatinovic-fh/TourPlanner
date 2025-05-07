@@ -8,7 +8,7 @@
 
   <top>
     <VBox>
-      <MenuBar>
+      <MenuBar minWidth="350">
         <Menu text="File">
           <MenuItem fx:id="newTourMenuItem" onAction="#onNewTourMenuItemClick" text="New Tour" />
           <MenuItem fx:id="exitMenuItem" onAction="#onExitClick" text="Exit" />
