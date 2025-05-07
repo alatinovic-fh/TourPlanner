@@ -1,7 +1,5 @@
 package at.fh.bif.swen.tourplanner.model;
 
-import java.util.List;
-
 public record Tour(String name, String description, String from, String to){
     @Override
     public String toString() {
