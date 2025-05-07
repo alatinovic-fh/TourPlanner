@@ -62,7 +62,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>at.fh.bif.swen.tourplanner/at.fh.bif.swen.tourplanner.HelloApplication</mainClass>
+              <mainClass>at.fh.bif.swen.tourplanner/at.fh.bif.swen.tourplanner.TourPlanerApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>

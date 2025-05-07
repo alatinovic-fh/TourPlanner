@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="at.fh.bif.swen.tourplanner.view.TourPlanerController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
+<BorderPane prefHeight="300.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.TourPlanerController">
 
-  <Label fx:id="welcomeText"/>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+  <top>
+    <VBox>
+      <MenuBar>
+        <Menu text="File">
+          <MenuItem fx:id="newTourMenuItem" onAction="#onNewTourMenuItemClick" text="New Tour" />
+          <MenuItem fx:id="exitMenuItem" onAction="#onExitClick" text="Exit" />
+        </Menu>
+        <Menu text="Edit" />
+        <Menu text="Options" />
+        <Menu text="Help" />
+      </MenuBar>
+         <TextField fx:id="searchField" promptText="Search">
+            <padding>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+            <VBox.margin>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </VBox.margin>
+         </TextField>
+    </VBox>
+  </top>
+
+  <center>
+      <VBox>
+          <ListView fx:id="tourListView" VBox.vgrow="ALWAYS" />
+      </VBox>
+  </center>
+</BorderPane>
