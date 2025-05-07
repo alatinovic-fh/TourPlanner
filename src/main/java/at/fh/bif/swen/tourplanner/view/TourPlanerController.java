@@ -1,4 +1,4 @@
-package at.fh.bif.swen.tourplanner;
+package at.fh.bif.swen.tourplanner.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
