@@ -11,8 +11,8 @@ public class TourPlannerService {
     }
 
     public ObservableList<Tour> loadTours(){
-        Tour tour = new Tour("Pöchlarnweg", "Eine Stadttour", "Matzleinsdorf", "Pöchlarn",  "" );
-        Tour tour2 = new Tour("NÖ-Rundfahrt", "Eine NÖ Tour", "Korneuburg", "Melk", "");
+        Tour tour = new Tour("Pöchlarnweg", "Eine Stadttour", "Matzleinsdorf", "Pöchlarn");
+        Tour tour2 = new Tour("NÖ-Rundfahrt", "Eine NÖ Tour", "Korneuburg", "Melk");
         ObservableList<Tour> tours = FXCollections.observableArrayList();
         tours.add(tour);
         tours.add(tour2);

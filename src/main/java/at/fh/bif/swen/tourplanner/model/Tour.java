@@ -2,7 +2,7 @@ package at.fh.bif.swen.tourplanner.model;
 
 // TODO implement full Tour record
 
-public record Tour(String name, String description, String from, String to, String imagePath){
+public record Tour(String name, String description, String from, String to){
     @Override
     public String toString() {
         return name;
