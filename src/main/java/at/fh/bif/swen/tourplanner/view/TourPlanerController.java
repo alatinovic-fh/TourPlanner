@@ -1,18 +1,27 @@
 package at.fh.bif.swen.tourplanner.view;
 
 import at.fh.bif.swen.tourplanner.model.Tour;
+import at.fh.bif.swen.tourplanner.service.TourPlannerService;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class TourPlanerController {
     @FXML
     public MenuItem exitMenuItem;
+
+    @FXML
+    public WebView mapView;
 
     @FXML
     private MenuItem newTourMenuItem;
@@ -29,17 +38,19 @@ public class TourPlanerController {
     }
     @FXML
     protected void onNewTourMenuItemClick() {
-        Tour tour = new Tour("Wien-Rundfahrt", "Eine Stadttour", "Wien", "Wien");
-        Tour tour2 = new Tour("NÖ-Rundfahrt", "Eine NÖ Tour", "Korneuburg", "Melk");
-        viewModel.addTour(tour);
-        viewModel.addTour(tour2);
+        viewModel.addTour();
     }
 
-    private final TourPlannerViewModel viewModel = new TourPlannerViewModel();
+    private final TourPlannerViewModel viewModel = new TourPlannerViewModel(new TourPlannerService());
 
     @FXML
-    public void initialize() {
+    public void initialize() throws MalformedURLException {
+        //Placeholder Leaflet Route
+        WebEngine webEngine = mapView.getEngine();
+        URL url = new File("src/main/resources/map.html").toURI().toURL();
+        webEngine.load(url.toString());
         tourListView.setItems(viewModel.getFilteredTours());
         Bindings.bindBidirectional(searchField.textProperty(), viewModel.searchQueryProperty());
     }
+
 }

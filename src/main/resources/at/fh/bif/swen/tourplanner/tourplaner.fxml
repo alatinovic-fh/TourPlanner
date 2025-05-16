@@ -3,34 +3,56 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
 
-<BorderPane prefHeight="300.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.TourPlanerController">
+<BorderPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.TourPlanerController">
 
-  <top>
-    <VBox>
-      <MenuBar minWidth="350">
-        <Menu text="File">
-          <MenuItem fx:id="newTourMenuItem" onAction="#onNewTourMenuItemClick" text="New Tour" />
-          <MenuItem fx:id="exitMenuItem" onAction="#onExitClick" text="Exit" />
-        </Menu>
-        <Menu text="Edit" />
-        <Menu text="Options" />
-        <Menu text="Help" />
-      </MenuBar>
-         <TextField fx:id="searchField" promptText="Search">
-            <padding>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-            <VBox.margin>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </VBox.margin>
-         </TextField>
-    </VBox>
-  </top>
+    <top>
+        <VBox>
+            <MenuBar minWidth="350">
+                <Menu text="File">
+                    <MenuItem fx:id="newTourMenuItem" onAction="#onNewTourMenuItemClick" text="New Tour" />
+                    <MenuItem fx:id="exitMenuItem" onAction="#onExitClick" text="Exit" />
+                </Menu>
+                <Menu text="Edit" />
+                <Menu text="Options" />
+                <Menu text="Help" />
+            </MenuBar>
 
-  <center>
-      <VBox>
-          <ListView fx:id="tourListView" VBox.vgrow="ALWAYS" />
-      </VBox>
-  </center>
+            <TextField fx:id="searchField" promptText="Search">
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+            </TextField>
+        </VBox>
+    </top>
+
+    <center>
+        <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="General">
+                    <VBox>
+                  <WebView fx:id="mapView"/>
+                  <TableView>
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+                    </VBox>
+                </Tab>
+                <Tab text="General">
+
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+    <left>
+        <ListView fx:id="tourListView" />
+    </left>
+
 </BorderPane>
