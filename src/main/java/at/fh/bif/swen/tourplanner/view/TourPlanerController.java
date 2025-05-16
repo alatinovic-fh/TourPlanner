@@ -16,6 +16,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+// TODO Add other UI elements according to Wireframe
+// TODO create bindings to these elements
+// TODO Add demo functionality better way to CRUD Tours
+// TODO Add Tourlogs (CRUD)
+
 public class TourPlanerController {
     @FXML
     public MenuItem exitMenuItem;
