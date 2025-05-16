@@ -1,3 +1,8 @@
+mvnw
+mvnw.cmd
+.idea
+.mvn
+.idea/misc.xml
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

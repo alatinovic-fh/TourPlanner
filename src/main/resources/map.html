@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Simple Route Line with Leaflet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <style>
+        #map {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+        }
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    // TODO Make this flexible when new Tour is added
+    const map = L.map('map').setView([48.20703880023519, 15.238992724563282], 14);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    const matzleinsdorf = [48.203463608089926, 15.275642431767542];
+    const poechlarn = [48.21041355268731, 15.213586843747837];
+
+    L.marker(matzleinsdorf).addTo(map).bindPopup("Matzleinsdorf bei Melk");
+    L.marker(poechlarn).addTo(map).bindPopup("Pöchlarn");
+</script>
+
+</body>
+</html>
