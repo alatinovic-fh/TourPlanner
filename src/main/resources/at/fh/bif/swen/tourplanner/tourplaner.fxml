@@ -15,7 +15,10 @@
                     <MenuItem fx:id="exitMenuItem" onAction="#onExitClick" text="Exit" />
                 </Menu>
                 <Menu text="Edit" />
-                <Menu text="Options" />
+                <Menu text="Options">
+                    <MenuItem fx:id="newSummarizeReportItem" onAction="#onNewSummarizeReportItemClick" text="Summarize Report" />
+                    <MenuItem fx:id="newTourReportItem" onAction="#onTourReportClick" text="Tour Report" />
+                </Menu>
                 <Menu text="Help" />
             </MenuBar>
 

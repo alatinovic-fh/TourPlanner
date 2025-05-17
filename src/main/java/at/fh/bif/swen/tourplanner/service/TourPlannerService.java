@@ -1,6 +1,7 @@
 package at.fh.bif.swen.tourplanner.service;
 
 import at.fh.bif.swen.tourplanner.model.Tour;
+import at.fh.bif.swen.tourplanner.model.TourSummery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

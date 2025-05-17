@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.TourSummaryController" spacing="10" padding="10">
+    <Label text="Tour Summary Report" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <TableView fx:id="summaryTable">
+        <columns>
+            <TableColumn fx:id="nameColumn" text="Tour Name" />
+            <TableColumn fx:id="avgTimeColumn" text="Avg Time (min)" />
+            <TableColumn fx:id="avgDistanceColumn" text="Avg Distance (km)" />
+            <TableColumn fx:id="avgRatingColumn" text="Avg Rating" />
+        </columns>
+    </TableView>
+</VBox>

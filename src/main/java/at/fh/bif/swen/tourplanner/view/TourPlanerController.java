@@ -6,6 +6,7 @@ import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.web.WebEngine;
@@ -38,6 +39,31 @@ public class TourPlanerController {
     private javafx.scene.control.ListView<Tour> tourListView;
 
     @FXML
+    protected void onNewSummarizeReportItemClick(ActionEvent event) {
+        //ToDo:
+        //    summarize-report for statistical analysis, which for EACH TOUR provides the
+        //    average time, -distance and -rating over all associated tour-logs
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/at/fh/bif/swen/tourplanner/view/tour_summary.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Tour Summary Report");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); // Consider logging properly
+        }
+    }
+
+    @FXML
+    protected void onTourReportClick(ActionEvent event) {
+        //ToDo: tour-report which contains all information of a single tour and all its associated tour-logs ( -1 Tour, -n Logs)
+        //   date/time, comment, difficulty, total distance, total time, and rating taken on the tour
+
+    }
+
+    @FXML
     protected void onExitClick(ActionEvent actionEvent) {
         System.exit(0);
     }
@@ -57,5 +83,8 @@ public class TourPlanerController {
         tourListView.setItems(viewModel.getFilteredTours());
         Bindings.bindBidirectional(searchField.textProperty(), viewModel.searchQueryProperty());
     }
+
+
+
 
 }
