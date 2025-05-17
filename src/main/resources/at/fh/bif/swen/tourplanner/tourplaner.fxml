@@ -44,8 +44,12 @@
                   </TableView>
                     </VBox>
                 </Tab>
-                <Tab text="General">
-
+                <Tab text="Tour Logs">
+                    <VBox>
+                        <ToolBar>
+                            <Button fx:id="addTourLog" text="Add Log"/>
+                        </ToolBar>
+                    </VBox>
                 </Tab>
             </tabs>
         </TabPane>
