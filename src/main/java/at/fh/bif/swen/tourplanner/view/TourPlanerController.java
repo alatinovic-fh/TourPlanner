@@ -20,6 +20,8 @@ import java.util.List;
 // TODO create bindings to these elements
 // TODO Add demo functionality better way to CRUD Tours
 // TODO Add Tourlogs (CRUD)
+// TODO Split ViewModel in different classes
+//TODO Split Controller in different classes
 
 public class TourPlanerController {
     @FXML
