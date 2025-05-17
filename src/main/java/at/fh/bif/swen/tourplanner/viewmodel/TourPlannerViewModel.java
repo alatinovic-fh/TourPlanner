@@ -11,7 +11,9 @@ public class TourPlannerViewModel {
     private final ObservableList<Tour> allTours = FXCollections.observableArrayList();
     private final ObservableList<Tour> filteredTours = FXCollections.observableArrayList();
     private final StringProperty searchQuery = new SimpleStringProperty("");
+    private final StringProperty tourDetails = new SimpleStringProperty("");
     private TourPlannerService tourPlannerService;
+    private Tour selectedTour;
 
 
     public TourPlannerViewModel(TourPlannerService service) {
@@ -34,5 +36,14 @@ public class TourPlannerViewModel {
 
     public StringProperty searchQueryProperty() {
         return searchQuery;
+    }
+
+    public StringProperty tourDetailsProperty() {
+        return tourDetails;
+    }
+
+    public void setSelectedTour(Tour tour) {
+        this.selectedTour = tour;
+        this.tourDetailsProperty().set(this.selectedTour.details());
     }
 }

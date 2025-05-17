@@ -29,7 +29,7 @@ public class TourPlanerController {
     public WebView mapView;
 
     @FXML
-    private MenuItem newTourMenuItem;
+    public Label tourDataLabel;
 
     @FXML
     private javafx.scene.control.TextField searchField;
@@ -46,16 +46,30 @@ public class TourPlanerController {
         viewModel.addTour();
     }
 
+    @FXML
+    protected void onNewTourLogClick(){
+    }
+
     private final TourPlannerViewModel viewModel = new TourPlannerViewModel(new TourPlannerService());
 
     @FXML
-    public void initialize() throws MalformedURLException {
-        //Placeholder Leaflet Route
+    public void initialize() {
+        //fixed prepared Leaflet Route
         WebEngine webEngine = mapView.getEngine();
-        URL url = new File("src/main/resources/map.html").toURI().toURL();
-        webEngine.load(url.toString());
+        tourListView.getSelectionModel().selectedItemProperty().addListener( (observable, oldValue, newValue) -> {
+            viewModel.setSelectedTour(newValue);
+            URL url = null;
+            try {
+                url = new File(newValue.mapPath()).toURI().toURL();
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+            webEngine.load(url.toString());
+        });
+
         tourListView.setItems(viewModel.getFilteredTours());
         Bindings.bindBidirectional(searchField.textProperty(), viewModel.searchQueryProperty());
+        Bindings.bindBidirectional(tourDataLabel.textProperty(), viewModel.tourDetailsProperty());
     }
 
 }

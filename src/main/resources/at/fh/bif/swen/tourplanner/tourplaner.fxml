@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
 
 <BorderPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.TourPlanerController">
@@ -19,14 +20,6 @@
                 <Menu text="Help" />
             </MenuBar>
 
-            <TextField fx:id="searchField" promptText="Search">
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-                <VBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </VBox.margin>
-            </TextField>
         </VBox>
     </top>
 
@@ -35,20 +28,31 @@
             <tabs>
                 <Tab text="General">
                     <VBox>
-                  <WebView fx:id="mapView"/>
-                  <TableView>
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
-                    </columns>
-                  </TableView>
+                  <WebView fx:id="mapView" prefHeight="343.0" prefWidth="832.0" />
+                  <Label fx:id="tourDataLabel" alignment="TOP_LEFT" prefHeight="325.0" prefWidth="727.0" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font size="25.0" />
+                     </font></Label>
                     </VBox>
                 </Tab>
                 <Tab text="Tour Logs">
                     <VBox>
                         <ToolBar>
-                            <Button fx:id="addTourLog" text="Add Log"/>
+                            <Button fx:id="addTourLog" onAction="#onNewTourLogClick" text="Add Log" />
                         </ToolBar>
+                  <TableView prefHeight="630.0" prefWidth="832.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="date/time" />
+                      <TableColumn prefWidth="75.0" text="comment" />
+                        <TableColumn prefWidth="75.0" text="difficulty" />
+                        <TableColumn prefWidth="113.0" text="total distance" />
+                        <TableColumn prefWidth="75.0" text="local time" />
+                        <TableColumn prefWidth="75.0" text="rating" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
                     </VBox>
                 </Tab>
             </tabs>
@@ -56,7 +60,17 @@
     </center>
 
     <left>
-        <ListView fx:id="tourListView" />
+        <VBox>
+            <TextField fx:id="searchField" promptText="Search">
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+            </TextField>
+            <ListView fx:id="tourListView" VBox.vgrow="ALWAYS" />
+        </VBox>
     </left>
 
 </BorderPane>
