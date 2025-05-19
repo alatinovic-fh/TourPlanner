@@ -55,6 +55,9 @@
                   </TableView>
                     </VBox>
                 </Tab>
+                <Tab text="Manage Tour">
+                    <fx:include source="manage_tour.fxml"/>
+                </Tab>
             </tabs>
         </TabPane>
     </center>

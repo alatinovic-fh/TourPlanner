@@ -6,29 +6,46 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
 public class TourPlannerViewModel {
     private final ObservableList<Tour> allTours = FXCollections.observableArrayList();
     private final ObservableList<Tour> filteredTours = FXCollections.observableArrayList();
     private final StringProperty searchQuery = new SimpleStringProperty("");
     private final StringProperty tourDetails = new SimpleStringProperty("");
-    private TourPlannerService tourPlannerService;
+
+    private final TourPlannerService tourPlannerService;
+    private final ManageTourViewModel manageTourViewModel;
+
     private Tour selectedTour;
+    private final ObjectProperty<Tour> selectedTourProperty = new SimpleObjectProperty<>();
 
-
-    public TourPlannerViewModel(TourPlannerService service) {
-        this.tourPlannerService = service;
+    public TourPlannerViewModel(TourPlannerService tourPlannerService, ManageTourViewModel manageTourViewModel) {
+        this.tourPlannerService = tourPlannerService;
+        this.manageTourViewModel = manageTourViewModel;
         this.searchQuery.addListener((obs, oldVal, newVal) -> filterTours());
+        this.manageTourViewModel.savedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                refreshTourList();
+                manageTourViewModel.savedProperty().set(false);
+            }
+        });
+        manageTourViewModel.deletedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                refreshTourList();
+                manageTourViewModel.deletedProperty().set(false); // reset
+            }
+        });
     }
 
-    public void addTour() {
-        allTours.addAll(this.tourPlannerService.loadTours());
+    public void addTour(Tour tour) {
+        tourPlannerService.addTour(tour);
+        allTours.add(tour);
         filterTours();
     }
 
     public void filterTours() {
         filteredTours.setAll(tourPlannerService.filterTours(allTours, searchQuery.get()));
     }
+
 
     public ObservableList<Tour> getFilteredTours() {
         return filteredTours;
@@ -42,8 +59,22 @@ public class TourPlannerViewModel {
         return tourDetails;
     }
 
+    public ObjectProperty<Tour> selectedTourProperty() {
+        return selectedTourProperty;
+    }
+
     public void setSelectedTour(Tour tour) {
         this.selectedTour = tour;
-        this.tourDetailsProperty().set(this.selectedTour.details());
+        selectedTourProperty.set(tour);
+        if (this.selectedTour != null) {
+            this.tourDetailsProperty().set(this.selectedTour.details());
+        } else {
+            this.tourDetailsProperty().set("");
+        }
+    }
+
+    public void refreshTourList() {
+        allTours.setAll(tourPlannerService.loadTours());
+        filterTours();
     }
 }
