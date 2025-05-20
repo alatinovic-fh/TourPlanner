@@ -54,37 +54,28 @@ class TourPlanerApplicationTest {
         TourPlanerApplication.showStage(stage, root);
     }
 
-    // Flag: Not a good Initial Test.
-/*    @Test
-    void whenInit_thenTourListIsEmpty() {
-        // Arrange
-
-        // Act
-        NodeQueryUtils.bySelector("#tourListView").apply(root).forEach(node -> {
-            assertNull(node);
-
-        });
-
-        // Assert
-    }*/
-
-
     @Test
     void whenAddTour_thenTourListIsNotEmpty(FxRobot robot) throws InterruptedException {
+        // ARRANGE
+
         // ACT
         // Click on the File menu (by visible text, since Menu does not have fx:id)
         robot.clickOn("File");
         Thread.sleep(100);
         robot.clickOn("File"); // FIXME: if file is clicked once --> it will reload the whole stage???
-        Thread.sleep(500);
+
         // Click on the New Tour menu item (ensure fx:id="newTourMenuItem" in FXML)
         robot.clickOn("#newTourMenuItem");
-        WaitForAsyncUtils.waitForFxEvents();
+        Thread.sleep(700);
         // Fill out the form in the popup window
         robot.clickOn("#nameField").write("UITest name");
+
         robot.clickOn("#descriptionField").write("UITest description");
+
         robot.clickOn("#fromField").write("UITest from");
+
         robot.clickOn("#toField").write("UITest to");
+
         robot.clickOn("#transportTypeCombo").clickOn("CAR");
         // Click the Add/Save button (ensure fx:id="btnAddTour" in add_tour.fxml)
         robot.clickOn("#btnAddTour");
@@ -99,6 +90,7 @@ class TourPlanerApplicationTest {
         // Check list is not empty (use getItems().isEmpty(), not getSelectedItems())
         assertFalse(listView.getItems().isEmpty());
     }
+
 
 
 }
