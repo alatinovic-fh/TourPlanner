@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
@@ -23,8 +24,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-// TODO Add Tourlogs (CRUD)
 // TODO Make language consistent in Application !!!
+// TODO Errorhandling
 
 public class TourPlanerController {
     @FXML
@@ -35,6 +36,7 @@ public class TourPlanerController {
 
     @FXML
     public Label tourDataLabel;
+
 
     @FXML
     private javafx.scene.control.TextField searchField;
@@ -70,10 +72,6 @@ public class TourPlanerController {
         }
     }
 
-    @FXML
-    protected void onNewTourLogClick(){
-    }
-    ;
     private final TourPlannerViewModel viewModel;
 
     public TourPlanerController(TourPlannerViewModel viewModel) {

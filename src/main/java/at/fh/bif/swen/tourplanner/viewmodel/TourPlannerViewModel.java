@@ -18,9 +18,10 @@ public class TourPlannerViewModel {
     private Tour selectedTour;
     private final ObjectProperty<Tour> selectedTourProperty = new SimpleObjectProperty<>();
 
-    public TourPlannerViewModel(TourPlannerService tourPlannerService, ManageTourViewModel manageTourViewModel) {
+    public TourPlannerViewModel(TourPlannerService tourPlannerService, ManageTourViewModel manageTourViewModel, TourLogViewModel tourLogViewModel) {
         this.tourPlannerService = tourPlannerService;
         this.manageTourViewModel = manageTourViewModel;
+
         this.searchQuery.addListener((obs, oldVal, newVal) -> filterTours());
         this.manageTourViewModel.savedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {

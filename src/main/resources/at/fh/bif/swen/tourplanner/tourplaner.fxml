@@ -36,24 +36,7 @@
                     </VBox>
                 </Tab>
                 <Tab text="Tour Logs">
-                    <VBox>
-                        <ToolBar>
-                            <Button fx:id="addTourLog" onAction="#onNewTourLogClick" text="Add Log" />
-                        </ToolBar>
-                  <TableView prefHeight="630.0" prefWidth="832.0" VBox.vgrow="ALWAYS">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="date/time" />
-                      <TableColumn prefWidth="75.0" text="comment" />
-                        <TableColumn prefWidth="75.0" text="difficulty" />
-                        <TableColumn prefWidth="113.0" text="total distance" />
-                        <TableColumn prefWidth="75.0" text="local time" />
-                        <TableColumn prefWidth="75.0" text="rating" />
-                    </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-                    </VBox>
+                    <fx:include source="manage_tourlogs.fxml"/>
                 </Tab>
                 <Tab text="Manage Tour">
                     <fx:include source="manage_tour.fxml"/>

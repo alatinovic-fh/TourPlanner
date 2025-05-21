@@ -1,12 +1,19 @@
 package at.fh.bif.swen.tourplanner.service;
 
 import at.fh.bif.swen.tourplanner.model.Tour;
+import at.fh.bif.swen.tourplanner.model.TourLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TourPlannerService {
 
     private final ObservableList<Tour> tours = FXCollections.observableArrayList();
+    private final Map<Long, ObservableList<TourLog>> tourLogs = new HashMap<>();
     public TourPlannerService() {
     }
 
@@ -21,6 +28,7 @@ public class TourPlannerService {
 
     public void addTour(Tour tour) {
         tours.add(tour);
+        tourLogs.put(tour.id(), FXCollections.observableArrayList());
     }
 
     public void updateTour(Tour updatedTour) {
@@ -38,6 +46,38 @@ public class TourPlannerService {
     public void deleteTour(Tour tour) {
         if (tour != null) {
             tours.remove(tour);
+        }
+    }
+
+
+    public ObservableList<TourLog> loadTourLogs(Tour selectedTour){
+        if (selectedTour != null) {
+            return this.tourLogs.get(selectedTour.id());
+        }
+        return null;
+    }
+
+    public void addTourLog(TourLog tourLog, Tour selectedTour) {
+        if (tourLog != null) {
+            this.tourLogs.get(selectedTour.id()).add(tourLog);
+        }
+    }
+
+    public void updateTourLog(TourLog newTourLog, Tour selectedTour) {
+        List<TourLog> tourlog = this.tourLogs.get(selectedTour.id());
+        if (newTourLog != null) {
+            for (TourLog current : tourlog) {
+                if (current.id() == newTourLog.id()) {
+                    tourlog.set(tourlog.indexOf(current), newTourLog);
+                }
+            }
+        }
+    }
+
+    public void deleteTourLog(TourLog deletedTourLog, Tour selectedTour) {
+        if (selectedTour != null) {
+        List<TourLog> tourlog = this.tourLogs.get(selectedTour.id());
+            tourlog.removeIf(current -> current.id() == deletedTourLog.id());
         }
     }
 }
