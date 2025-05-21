@@ -66,7 +66,7 @@ class TourPlanerApplicationTest {
 
         // Click on the New Tour menu item (ensure fx:id="newTourMenuItem" in FXML)
         robot.clickOn("#newTourMenuItem");
-        Thread.sleep(700);
+        Thread.sleep(1000);
         // Fill out the form in the popup window
         robot.clickOn("#nameField").write("UITest name");
 
@@ -89,6 +89,7 @@ class TourPlanerApplicationTest {
         assertNotNull(listView);
         // Check list is not empty (use getItems().isEmpty(), not getSelectedItems())
         assertFalse(listView.getItems().isEmpty());
+        assertTrue(listView.getItems().get(0) instanceof Tour); // Question: are the newest Tours on the top? ==> IF SO get(0) is fine
     }
 
 
