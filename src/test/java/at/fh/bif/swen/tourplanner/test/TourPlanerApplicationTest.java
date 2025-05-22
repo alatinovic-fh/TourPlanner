@@ -8,6 +8,7 @@ import at.fh.bif.swen.tourplanner.service.TourPlannerService;
 import at.fh.bif.swen.tourplanner.view.ManageTourController;
 import at.fh.bif.swen.tourplanner.view.TourPlanerController;
 import at.fh.bif.swen.tourplanner.view.AddTourController;
+import at.fh.bif.swen.tourplanner.viewmodel.TourLogViewModel;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import at.fh.bif.swen.tourplanner.viewmodel.ManageTourViewModel;
 
@@ -38,6 +39,7 @@ class TourPlanerApplicationTest {
     private ManageTourController manageTourController;
     private ManageTourViewModel manageTourViewModel;
     private TourPlannerViewModel tourPlannerViewModel;
+    private TourLogViewModel tourLogViewModel;
     private AddTourController addTourController;
 
     private Parent root;
@@ -46,11 +48,12 @@ class TourPlanerApplicationTest {
     private void start(Stage stage) throws IOException {
         tourPlannerService = new TourPlannerService();
         manageTourViewModel = new ManageTourViewModel(tourPlannerService);
-        tourPlannerViewModel = new TourPlannerViewModel(tourPlannerService,manageTourViewModel);
+        tourLogViewModel = new TourLogViewModel(tourPlannerService);
+        tourPlannerViewModel = new TourPlannerViewModel(tourPlannerService,manageTourViewModel, tourLogViewModel);
         tourPlanerController = new TourPlanerController(tourPlannerViewModel);
         manageTourController = new ManageTourController(manageTourViewModel,tourPlannerViewModel);
         addTourController = new AddTourController();
-        root = TourPlanerApplication.loadRootNode(tourPlannerViewModel,manageTourViewModel);
+        root = TourPlanerApplication.loadRootNode(tourPlannerViewModel,manageTourViewModel, tourLogViewModel);
         TourPlanerApplication.showStage(stage, root);
     }
 

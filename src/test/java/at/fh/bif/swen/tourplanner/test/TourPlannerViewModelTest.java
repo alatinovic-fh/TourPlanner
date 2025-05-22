@@ -5,6 +5,7 @@ import at.fh.bif.swen.tourplanner.model.TransportType;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
 import at.fh.bif.swen.tourplanner.viewmodel.ManageTourViewModel;
 
+import at.fh.bif.swen.tourplanner.viewmodel.TourLogViewModel;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -22,6 +23,7 @@ class TourPlannerViewModelTest {
 
     private TourPlannerService mockTourPlannerService;
     private ManageTourViewModel mockManageTourViewModel;
+    private TourLogViewModel mockTourLogViewModel;
     private TourPlannerViewModel mockViewModel;
     private Tour setTour;
 
@@ -29,12 +31,13 @@ class TourPlannerViewModelTest {
     void setUp() {
         mockTourPlannerService = mock(TourPlannerService.class);
         mockManageTourViewModel = mock(ManageTourViewModel.class);
+        mockTourLogViewModel = mock(TourLogViewModel.class);
 
         //Mock observable triggers
         when(mockManageTourViewModel.savedProperty()).thenReturn(new SimpleBooleanProperty(false));
         when(mockManageTourViewModel.deletedProperty()).thenReturn(new SimpleBooleanProperty(false));
 
-        mockViewModel = new TourPlannerViewModel(mockTourPlannerService, mockManageTourViewModel);
+        mockViewModel = new TourPlannerViewModel(mockTourPlannerService, mockManageTourViewModel, mockTourLogViewModel);
 
         setTour = new Tour(1, "Bike Ride", "riding high", "Innsbruck", "Deutschlandsberg",
                 TransportType.CAR, 112.0, Duration.ofHours(2), "/map/path.png");
