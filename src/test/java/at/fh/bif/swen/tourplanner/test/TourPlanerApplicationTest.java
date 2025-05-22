@@ -59,39 +59,28 @@ class TourPlanerApplicationTest {
         // ARRANGE
 
         // ACT
-        // Click on the File menu (by visible text, since Menu does not have fx:id)
-        robot.clickOn("File");
-        Thread.sleep(100);
-        robot.clickOn("File"); // FIXME: if file is clicked once --> it will reload the whole stage???
+        robot.moveTo("File").clickOn();
+        WaitForAsyncUtils.waitForFxEvents(); // stelle sicher, dass das Menü sichtbar ist
 
-        // Click on the New Tour menu item (ensure fx:id="newTourMenuItem" in FXML)
         robot.clickOn("#newTourMenuItem");
-        Thread.sleep(1000);
-        // Fill out the form in the popup window
+        WaitForAsyncUtils.waitForFxEvents();
+
         robot.clickOn("#nameField").write("UITest name");
-
         robot.clickOn("#descriptionField").write("UITest description");
-
         robot.clickOn("#fromField").write("UITest from");
-
         robot.clickOn("#toField").write("UITest to");
 
         robot.clickOn("#transportTypeCombo").clickOn("CAR");
-        // Click the Add/Save button (ensure fx:id="btnAddTour" in add_tour.fxml)
         robot.clickOn("#btnAddTour");
 
-        // ASSERT
-        // Wait so that we are back at the main window
         WaitForAsyncUtils.waitForFxEvents();
-        Thread.sleep(1000);
 
+        //ASSERT
         ListView<?> listView = robot.lookup("#tourListView").query();
         assertNotNull(listView);
-        // Check list is not empty (use getItems().isEmpty(), not getSelectedItems())
         assertFalse(listView.getItems().isEmpty());
-        assertTrue(listView.getItems().get(0) instanceof Tour); // Question: are the newest Tours on the top? ==> IF SO get(0) is fine
+        assertTrue(listView.getItems().get(0) instanceof Tour);
     }
-
 
 
 }
