@@ -1,4 +1,4 @@
-# TourPlanner
+# TourPlanner (Latinovic, Asuncion)
 
 TourPlanner ist eine JavaFX-Anwendung zur Verwalten von Touren.
 Die Anwendung folgt dem MVVM-Architekturmuster und ermöglicht es Benutzer:innen, Touren zu erstellen,
