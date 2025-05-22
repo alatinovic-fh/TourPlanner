@@ -3,6 +3,7 @@ module at.fh.bif.swen.tourplanner {
 
     requires org.kordamp.bootstrapfx.core;
     requires javafx.web;
+    requires java.sql;
 
     opens at.fh.bif.swen.tourplanner to javafx.fxml;
     exports at.fh.bif.swen.tourplanner;

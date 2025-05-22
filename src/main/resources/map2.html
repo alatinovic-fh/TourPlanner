@@ -24,17 +24,17 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
     // TODO Make this flexible when new Tour is added
-    const map = L.map('map').setView([48.20703880023519, 15.238992724563282], 13);
+    const map = L.map('map').setView([48.304483928911715, 15.813629491162558], 10);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    const matzleinsdorf = [48.203463608089926, 15.275642431767542];
-    const poechlarn = [48.21041355268731, 15.213586843747837];
+    const korneuburg = [48.34577821059139, 16.331708544521078];
+    const melk = [48.227580022604535, 15.350830473065027];
 
-    L.marker(matzleinsdorf).addTo(map).bindPopup("Matzleinsdorf bei Melk");
-    L.marker(poechlarn).addTo(map).bindPopup("Pöchlarn");
+    L.marker(korneuburg).addTo(map).bindPopup("Matzleinsdorf bei Melk");
+    L.marker(melk).addTo(map).bindPopup("Pöchlarn");
 </script>
 
 </body>

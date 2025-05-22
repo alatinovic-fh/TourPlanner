@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.14-internal" fx:controller="at.fh.bif.swen.tourplanner.view.ManageTourController">
+
+    <Label text="Name:" />
+    <TextField fx:id="nameField" />
+
+    <Label text="Description:" />
+    <TextField fx:id="descriptionField" />
+
+    <Label text="From:" />
+    <TextField fx:id="fromField" />
+
+    <Label text="To:" />
+    <TextField fx:id="toField" />
+
+    <Label text="Transport Type:" />
+    <ComboBox fx:id="transportCombo" />
+
+    <HBox spacing="10">
+        <Button onAction="#onSaveTour" text="Save" />
+        <Button onAction="#onDeleteTour" text="Delete Tour" textFill="RED" />
+    </HBox>
+</VBox>

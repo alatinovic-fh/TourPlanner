@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.TourLogController">
+    <padding>
+        <Insets bottom="10" left="10" right="10" top="10" />
+    </padding>
+    <ToolBar>
+        <Button onAction="#onAddLog" text="Add Log" />
+        <Button onAction="#onDeleteLog" text="Delete Log" />
+        <Button onAction="#onSaveChanges" text="Save Changes" />
+    </ToolBar>
+    <TableView fx:id="tourLogTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="dateColumn" text="Date" />
+            <TableColumn fx:id="commentColumn" text="Comment" />
+            <TableColumn fx:id="difficultyColumn" text="Difficulty" />
+            <TableColumn fx:id="distanceColumn" text="Distance (km)" />
+            <TableColumn fx:id="durationColumn" text="Time" />
+            <TableColumn fx:id="ratingColumn" text="Rating" />
+        </columns>
+      <columnResizePolicy>
+         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+      </columnResizePolicy>
+    </TableView>
+    <TitledPane collapsible="false" text="Log Details">
+        <GridPane hgap="10" vgap="5">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="100" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="30" />
+                <RowConstraints minHeight="30" />
+                <RowConstraints minHeight="30" />
+                <RowConstraints minHeight="30" />
+            </rowConstraints>
+
+            <Label text="Comment:" />
+            <TextField fx:id="commentField" GridPane.columnIndex="1" />
+
+            <Label text="Difficulty:" GridPane.rowIndex="1" />
+            <TextField fx:id="difficultyField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Distance (km):" GridPane.rowIndex="2" />
+            <TextField fx:id="distanceField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <Label text="Time (HH:mm):" GridPane.rowIndex="3" />
+            <TextField fx:id="durationField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        </GridPane>
+    </TitledPane>
+</VBox>

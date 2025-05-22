@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
 
 <BorderPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.TourPlanerController">
@@ -10,7 +11,7 @@
     <top>
         <VBox>
             <MenuBar minWidth="350">
-                <Menu text="File">
+                <Menu text="File" fx:id="btnFileItem">
                     <MenuItem fx:id="newTourMenuItem" onAction="#onNewTourMenuItemClick" text="New Tour" />
                     <MenuItem fx:id="exitMenuItem" onAction="#onExitClick" text="Exit" />
                 </Menu>
@@ -19,14 +20,6 @@
                 <Menu text="Help" />
             </MenuBar>
 
-            <TextField fx:id="searchField" promptText="Search">
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-                <VBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </VBox.margin>
-            </TextField>
         </VBox>
     </top>
 
@@ -35,24 +28,35 @@
             <tabs>
                 <Tab text="General">
                     <VBox>
-                  <WebView fx:id="mapView"/>
-                  <TableView>
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
-                    </columns>
-                  </TableView>
+                  <WebView fx:id="mapView" prefHeight="343.0" prefWidth="832.0" />
+                  <Label fx:id="tourDataLabel" alignment="TOP_LEFT" prefHeight="325.0" prefWidth="727.0" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font size="25.0" />
+                     </font></Label>
                     </VBox>
                 </Tab>
-                <Tab text="General">
-
+                <Tab text="Tour Logs">
+                    <fx:include source="manage_tourlogs.fxml"/>
+                </Tab>
+                <Tab text="Manage Tour">
+                    <fx:include source="manage_tour.fxml"/>
                 </Tab>
             </tabs>
         </TabPane>
     </center>
 
     <left>
-        <ListView fx:id="tourListView" />
+        <VBox>
+            <TextField fx:id="searchField" promptText="Search">
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+            </TextField>
+            <ListView fx:id="tourListView" VBox.vgrow="ALWAYS" />
+        </VBox>
     </left>
 
 </BorderPane>
