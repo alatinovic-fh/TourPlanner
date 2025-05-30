@@ -205,6 +205,24 @@
           <target>21</target>
         </configuration>
       </plugin>
+      <!--
+        maven-surefire-plugin: Ensures that internal JavaFX classes are accessible to TestFX during test execution.
+        - Version updated to 3.2.5.
+        - The <argLine> adds -add-opens flags for JavaFX internals, fixing JavaFX module access issues on JDK 16+.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+        <configuration>
+          <!-- Fix for JavaFX module access issues on JDK 16+ -->
+          <argLine>
+            --add-opens=javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+            --add-opens=javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
+            --add-opens=javafx.graphics/com.sun.javafx.stage=ALL-UNNAMED
+          </argLine>
+        </configuration>
+      </plugin>
 
 
       <!-- JaCoCo Plugin (Optional, for external report) -->
