@@ -17,7 +17,6 @@
     <javafx.version>21</javafx.version>
   </properties>
 
-<!-- Spring Boot -->
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -34,15 +33,10 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
-
     </dependencies>
-
-
-
   </dependencyManagement>
 
-  <!-- Spring Boot Dependencies -->
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -66,7 +60,6 @@
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
 
-<!-- JavaFX -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
@@ -83,7 +76,6 @@
       <version>${javafx.version}</version>
     </dependency>
 
-    <!-- TEST FX -->
     <dependency>
       <groupId>org.testfx</groupId>
       <artifactId>testfx-junit5</artifactId>
@@ -98,7 +90,6 @@
     </dependency>
 
 
-<!-- hamcrest -->
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest</artifactId>
@@ -106,7 +97,6 @@
       <scope>test</scope>
     </dependency>
 
-<!-- jacoco -->
     <dependency>
       <groupId>org.jacoco</groupId>
       <artifactId>org.jacoco.agent</artifactId>
@@ -114,7 +104,6 @@
       <classifier>runtime</classifier>
     </dependency>
 
-<!-- Persistence -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -148,7 +137,6 @@
       <version>0.4.0</version>
    </dependency>
 
-<!--- testing -->
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
@@ -183,31 +171,8 @@
       <scope>test</scope>
     </dependency>
 
-<!-- SpockFramkwork -->
-    <!-- Choose Recommendation: Junit or Spock but not both
-    <dependency>
-      <groupId>org.spockframework</groupId>
-      <artifactId>spock-core</artifactId>
-      <version>1.3-groovy-2.5</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testfx</groupId>
-      <artifactId>testfx-spock</artifactId>
-      <version>4.0.18</version>
-      <scope>test</scope>
-    </dependency>
-  -->
-
-
-
-
   </dependencies>
 
-
-
-
-  <!--======================= Build =======================-->
   <build>
     <plugins>
       <plugin>
@@ -219,22 +184,16 @@
           <target>21</target>
         </configuration>
       </plugin>
-      <!--
-        maven-surefire-plugin: Ensures that internal JavaFX classes are accessible to TestFX during test execution.
-        - Version updated to 3.2.5.
-        - The <argLine> adds -add-opens flags for JavaFX internals, fixing JavaFX module access issues on JDK 16+.
-      -->
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
         <configuration>
-          <!-- FIX FOR MAC USERS -->
           <systemPropertyVariables>
             <java.awt.headless>false</java.awt.headless>
           </systemPropertyVariables>
 
-          <!-- Fix for JavaFX module access issues on JDK 16+ -->
           <argLine>
             --add-opens=javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
             --add-opens=javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
@@ -243,12 +202,6 @@
         </configuration>
       </plugin>
 
-
-
-
-
-
-      <!-- JaCoCo Plugin (Optional, for external report) -->
       <plugin>
       <groupId>org.jacoco</groupId>
       <artifactId>jacoco-maven-plugin</artifactId>
@@ -276,7 +229,6 @@
         <version>0.0.8</version>
         <executions>
           <execution>
-            <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
               <mainClass>at.fh.bif.swen.tourplanner.TourPlanerApplication</mainClass>

@@ -24,12 +24,12 @@ public class TourPlannerService {
     }
 
     public ObservableList<Tour> filterTours(ObservableList<Tour> tourList, String query) {
-        return tourList.filtered(t -> t.name().toLowerCase().contains(query.toLowerCase()));
+        return tourList.filtered(t -> t.getName().toLowerCase().contains(query.toLowerCase()));
     }
 
     public void addTour(Tour tour) {
         tours.add(tour);
-        tourLogs.put(tour.id(), FXCollections.observableArrayList());
+        tourLogs.put(tour.getId(), FXCollections.observableArrayList());
     }
 
     public void updateTour(Tour updatedTour) {
@@ -38,7 +38,7 @@ public class TourPlannerService {
             return;
         }
         for (Tour current : tours) {
-            if (current.id() == updatedTour.id()) {
+            if (current.getId() == updatedTour.getId()) {
                 tours.set(tours.indexOf(current), updatedTour);
             }
         }
@@ -53,22 +53,22 @@ public class TourPlannerService {
 
     public ObservableList<TourLog> loadTourLogs(Tour selectedTour){
         if (selectedTour != null) {
-            return this.tourLogs.get(selectedTour.id());
+            return this.tourLogs.get(selectedTour.getId());
         }
         return null;
     }
 
     public void addTourLog(TourLog tourLog, Tour selectedTour) {
         if (tourLog != null) {
-            this.tourLogs.get(selectedTour.id()).add(tourLog);
+            this.tourLogs.get(selectedTour.getId()).add(tourLog);
         }
     }
 
     public void updateTourLog(TourLog newTourLog, Tour selectedTour) {
-        List<TourLog> tourlog = this.tourLogs.get(selectedTour.id());
+        List<TourLog> tourlog = this.tourLogs.get(selectedTour.getId());
         if (newTourLog != null) {
             for (TourLog current : tourlog) {
-                if (current.id() == newTourLog.id()) {
+                if (current.getId() == newTourLog.getId()) {
                     tourlog.set(tourlog.indexOf(current), newTourLog);
                 }
             }
@@ -77,8 +77,8 @@ public class TourPlannerService {
 
     public void deleteTourLog(TourLog deletedTourLog, Tour selectedTour) {
         if (selectedTour != null) {
-        List<TourLog> tourlog = this.tourLogs.get(selectedTour.id());
-            tourlog.removeIf(current -> current.id() == deletedTourLog.id());
+        List<TourLog> tourlog = this.tourLogs.get(selectedTour.getId());
+            tourlog.removeIf(current -> current.getId() == deletedTourLog.getId());
         }
     }
 }

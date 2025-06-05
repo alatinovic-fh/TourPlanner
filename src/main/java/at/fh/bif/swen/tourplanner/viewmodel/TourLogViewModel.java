@@ -7,10 +7,12 @@ import at.fh.bif.swen.tourplanner.util.IDGenerator;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDate;
 
+@Component
 public class TourLogViewModel {
     private final TourPlannerService service;
 
@@ -122,11 +124,15 @@ public class TourLogViewModel {
 
     public void setSelectedTourLog(TourLog selectedTourLog) {
 
-        //UPDATED
         comment.set(selectedTourLog.getComment());
         difficulty.set(selectedTourLog.getDifficulty());
         totalDistance.set(String.valueOf(selectedTourLog.getTotalDistance()));
-        totalTime.set(String.valueOf(selectedTourLog.getTotalTime()));
+
+        //Parse Duration to String format
+        Duration duration = selectedTourLog.getTotalTime();
+        long minutes = duration.toMinutes();
+        totalTime.set(String.valueOf(minutes));
+
         this.selectedTourLog = selectedTourLog;
 
     }

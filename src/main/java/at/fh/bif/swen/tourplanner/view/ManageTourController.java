@@ -8,8 +8,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-@Component
+@Controller
 public class ManageTourController {
 
     private final ManageTourViewModel manageTourViewModel;
@@ -20,7 +21,6 @@ public class ManageTourController {
     @FXML private TextField fromField;
     @FXML private TextField toField;
     @FXML private ComboBox<TransportType> transportCombo;
-
 
     public ManageTourController(ManageTourViewModel manageTourViewModel, TourPlannerViewModel viewModel) {
         this.manageTourViewModel = manageTourViewModel;

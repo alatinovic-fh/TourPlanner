@@ -5,9 +5,13 @@ import at.fh.bif.swen.tourplanner.service.TourPlannerService;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.Getter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TourPlannerViewModel {
     private final ObservableList<Tour> allTours = FXCollections.observableArrayList();
+    @Getter
     private final ObservableList<Tour> filteredTours = FXCollections.observableArrayList();
     private final StringProperty searchQuery = new SimpleStringProperty("");
     private final StringProperty tourDetails = new SimpleStringProperty("");
@@ -47,10 +51,6 @@ public class TourPlannerViewModel {
         filteredTours.setAll(tourPlannerService.filterTours(allTours, searchQuery.get()));
     }
 
-
-    public ObservableList<Tour> getFilteredTours() {
-        return filteredTours;
-    }
 
     public StringProperty searchQueryProperty() {
         return searchQuery;

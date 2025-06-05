@@ -9,8 +9,9 @@ import javafx.stage.Stage;
 import java.time.Duration;
 import at.fh.bif.swen.tourplanner.util.IDGenerator;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-@Component
+@Controller
 public class AddTourController {
 
     @FXML private TextField nameField;

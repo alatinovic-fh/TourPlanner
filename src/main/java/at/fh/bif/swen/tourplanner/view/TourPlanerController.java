@@ -14,6 +14,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +24,7 @@ import java.net.URL;
 // TODO Make language consistent in Application !!!
 // TODO Errorhandling
 
-@Component
+@Controller
 public class TourPlanerController {
     @FXML
     public MenuItem exitMenuItem;
@@ -83,7 +84,7 @@ public class TourPlanerController {
             if (newValue != null) {
                 URL url = null;
                 try {
-                    url = new File(newValue.mapPath()).toURI().toURL();
+                    url = new File(newValue.getMapPath()).toURI().toURL();
                 } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
