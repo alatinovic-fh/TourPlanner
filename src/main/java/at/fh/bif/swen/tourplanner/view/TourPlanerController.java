@@ -1,8 +1,6 @@
 package at.fh.bif.swen.tourplanner.view;
 
-import at.fh.bif.swen.tourplanner.model.Tour;
-import at.fh.bif.swen.tourplanner.service.TourPlannerService;
-import at.fh.bif.swen.tourplanner.viewmodel.ManageTourViewModel;
+import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -12,21 +10,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableView;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 // TODO Make language consistent in Application !!!
 // TODO Errorhandling
 
+@Component
 public class TourPlanerController {
     @FXML
     public MenuItem exitMenuItem;

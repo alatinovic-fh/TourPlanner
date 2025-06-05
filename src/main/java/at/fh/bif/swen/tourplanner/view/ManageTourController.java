@@ -1,13 +1,15 @@
 package at.fh.bif.swen.tourplanner.view;
 
 import at.fh.bif.swen.tourplanner.viewmodel.ManageTourViewModel;
-import at.fh.bif.swen.tourplanner.model.TransportType;
+import at.fh.bif.swen.tourplanner.persistence.entity.TransportType;
 
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ManageTourController {
 
     private final ManageTourViewModel manageTourViewModel;

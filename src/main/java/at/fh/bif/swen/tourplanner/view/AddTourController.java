@@ -1,14 +1,16 @@
 package at.fh.bif.swen.tourplanner.view;
 
-import at.fh.bif.swen.tourplanner.model.Tour;
-import at.fh.bif.swen.tourplanner.model.TransportType;
+import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
+import at.fh.bif.swen.tourplanner.persistence.entity.TransportType;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.time.Duration;
 import at.fh.bif.swen.tourplanner.util.IDGenerator;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AddTourController {
 
     @FXML private TextField nameField;

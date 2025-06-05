@@ -1,7 +1,7 @@
 package at.fh.bif.swen.tourplanner.test;
 
-import at.fh.bif.swen.tourplanner.model.Tour;
-import at.fh.bif.swen.tourplanner.model.TransportType;
+import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
+import at.fh.bif.swen.tourplanner.persistence.entity.TransportType;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

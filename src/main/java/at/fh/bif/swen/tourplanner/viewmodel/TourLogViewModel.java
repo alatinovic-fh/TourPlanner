@@ -1,7 +1,7 @@
 package at.fh.bif.swen.tourplanner.viewmodel;
 
-import at.fh.bif.swen.tourplanner.model.Tour;
-import at.fh.bif.swen.tourplanner.model.TourLog;
+import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
+import at.fh.bif.swen.tourplanner.persistence.entity.TourLog;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
 import at.fh.bif.swen.tourplanner.util.IDGenerator;
 import javafx.beans.property.*;
@@ -58,7 +58,7 @@ public class TourLogViewModel {
             e.printStackTrace();
         }
 
-        TourLog tourLog = new TourLog(selectedTourLog.id(), LocalDate.now(),comment.get(), difficulty.get(), totalDistanceDouble, Duration.ofMinutes(totalTimeLong), 1);
+        TourLog tourLog = new TourLog(selectedTourLog.getId(), LocalDate.now(),comment.get(), difficulty.get(), totalDistanceDouble, Duration.ofMinutes(totalTimeLong), 1);
         this.selectedTourLog = tourLog;
         service.updateTourLog(this.selectedTourLog, this.selectedTour);
         savedLog.set(true);
@@ -121,11 +121,14 @@ public class TourLogViewModel {
     }
 
     public void setSelectedTourLog(TourLog selectedTourLog) {
-        comment.set(selectedTourLog.comment());
-        difficulty.set(selectedTourLog.difficulty());
-        totalDistance.set(String.valueOf(selectedTourLog.totalDistance()));
-        totalTime.set(String.valueOf(selectedTourLog.totalTime().toMinutes()));
+
+        //UPDATED
+        comment.set(selectedTourLog.getComment());
+        difficulty.set(selectedTourLog.getDifficulty());
+        totalDistance.set(String.valueOf(selectedTourLog.getTotalDistance()));
+        totalTime.set(String.valueOf(selectedTourLog.getTotalTime()));
         this.selectedTourLog = selectedTourLog;
+
     }
 
 

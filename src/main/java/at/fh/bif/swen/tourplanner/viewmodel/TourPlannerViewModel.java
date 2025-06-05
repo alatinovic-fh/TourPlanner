@@ -1,6 +1,6 @@
 package at.fh.bif.swen.tourplanner.viewmodel;
 
-import at.fh.bif.swen.tourplanner.model.Tour;
+import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;

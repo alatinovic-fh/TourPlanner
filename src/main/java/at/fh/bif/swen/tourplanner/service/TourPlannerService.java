@@ -1,15 +1,16 @@
 package at.fh.bif.swen.tourplanner.service;
 
-import at.fh.bif.swen.tourplanner.model.Tour;
-import at.fh.bif.swen.tourplanner.model.TourLog;
+import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
+import at.fh.bif.swen.tourplanner.persistence.entity.TourLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class TourPlannerService {
 
     private final ObservableList<Tour> tours = FXCollections.observableArrayList();

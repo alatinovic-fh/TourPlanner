@@ -1,13 +1,16 @@
 package at.fh.bif.swen.tourplanner.view;
 
-import at.fh.bif.swen.tourplanner.model.TourLog;
+import at.fh.bif.swen.tourplanner.persistence.entity.TourLog;
 import at.fh.bif.swen.tourplanner.viewmodel.TourLogViewModel;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.springframework.stereotype.Component;
+
 import java.time.Duration;
 
+@Component
 public class TourLogController {
 
     private final TourLogViewModel tourLogViewModel;
