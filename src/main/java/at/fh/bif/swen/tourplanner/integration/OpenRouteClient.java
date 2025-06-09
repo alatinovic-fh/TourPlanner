@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URLEncoder;
+//import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -23,10 +23,10 @@ import java.util.Locale;
 import java.net.URLEncoder;
 
 @Component
-public class OpenRouteClient implements OpenRoute {
+public class OpenRouteClient implements OpenRoute { //Class 'OpenRouteClient' must either be declared abstract or implement abstract method 'getRoute(TransportType, GeoCoord, GeoCoord)' in 'OpenRoute'
 
     private final OpenRouteConfig config;
-    private final RestTemplate restTemplate;        //FIXME: RestTemplate not recognized
+    private final RestTemplate restTemplate;
 
     public OpenRouteClient(OpenRouteConfig config) {
 
@@ -36,7 +36,7 @@ public class OpenRouteClient implements OpenRoute {
 
 
 
-    @Overrde
+    @Override
     public GeoCoord geoCoord(String postalAddress){
         //TODO: from address to geoCoordinate
 
@@ -60,12 +60,12 @@ public class OpenRouteClient implements OpenRoute {
             if (response.statusCode() == 200) {
 
 
-                ObjectMapper mapper = new ObjectMapper();           //FIXME: ObjectMapper not recognized
-                JsonNode root = mapper.readTree(response.body());   //FIXME: JsonNode not recognized as well as .readTree
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode root = mapper.readTree(response.body());
 
                 try {
-                    var coords = root.get("features").get(0).get("geometry").get("coordinates");    //FIXME: root.get not recognized
-                    return new GeoCoord(coords.get(0).asDouble(), coords.get(1).asDouble());        //FIXME: .get(n) not recognized
+                    var coords = root.get("features").get(0).get("geometry").get("coordinates");
+                    return new GeoCoord(coords.get(0).asDouble(), coords.get(1).asDouble());
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -85,8 +85,36 @@ public class OpenRouteClient implements OpenRoute {
     }
 
 
-    @Override
     public JsonNode getRoute(TransportType type, GeoCoord start, GeoCoord end) {
-        return null;
+
+        NumberFormat formatter = NumberFormat.getNumberInstance(Locale.UK);
+        formatter.setMaximumFractionDigits(6);
+
+        String url = String.format("https://api.openrouteservice.org/v2/directions/%s?api_key=%s&start=%s,%s&end=%s,%s",
+                type.toString(), config.getApiKey(),
+                formatter.format(start.lat()),formatter.format(start.lon()),
+                formatter.format(end.lat()),formatter.format(end.lon()));
+
+        try(HttpClient client = HttpClient.newHttpClient()) {
+            HttpRequest request = HttpRequest.newBuilder().
+                    uri(URI.create(url))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode root = mapper.readTree(response.body());
+                System.out.println(root.toPrettyString());
+                return root;
+            } else {
+                System.err.println("Failed to parse REST Response: " + response.body());
+                return null;
+            }
+
+        } catch (IOException | InterruptedException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
 }

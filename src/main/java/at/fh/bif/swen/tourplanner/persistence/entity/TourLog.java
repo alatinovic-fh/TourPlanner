@@ -40,7 +40,7 @@ public class TourLog {
     @Column(name = "rating")
     private double rating;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "tour_id", nullable = false)
     private Tour tour;
 
