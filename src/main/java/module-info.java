@@ -12,11 +12,13 @@ module at.fh.bif.swen.tourplanner {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
-    requires java.desktop;
 
 
     requires static lombok;
     requires org.kordamp.bootstrapfx.core;
+    requires java.net.http;
+    requires spring.web;
+    requires com.fasterxml.jackson.databind;
 
 
 

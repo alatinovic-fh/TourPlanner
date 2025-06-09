@@ -1,0 +1,19 @@
+package at.fh.bif.swen.tourplanner.config;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component; //Question: what does this do?
+
+@Component
+@ConfigurationProperties(prefix = "openroute")
+public class OpenRouteConfig {
+
+    private String apiKey;
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+}
