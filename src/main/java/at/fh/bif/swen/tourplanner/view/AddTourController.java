@@ -35,7 +35,6 @@ public class AddTourController {
     @FXML
     private void onSave() {
         newTour = new Tour(
-                IDGenerator.nextId(),
                 nameField.getText(),
                 descriptionField.getText(),
                 fromField.getText(),

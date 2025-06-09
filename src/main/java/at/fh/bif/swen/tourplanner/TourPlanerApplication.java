@@ -34,19 +34,6 @@ public class TourPlanerApplication extends Application {
 
     //FLAG: Refactorization- point 5 --> Spring context lifecycle integration for JavaFX - Spring Boot
     private ConfigurableApplicationContext springContext;
-/*
-    private final TourPlannerService tourPlannerService;
-
-    private final TourPlannerViewModel viewModel;
-    private final ManageTourViewModel manageTourViewModel;
-    private final TourLogViewModel tourLogViewModel;*/
-//QUESTION: THIS Constructor shouldn't be here anymore going forth with spring boot right?
-/*    public TourPlanerApplication() {
-        tourPlannerService = new TourPlannerService();
-        tourLogViewModel = new TourLogViewModel(tourPlannerService);
-        manageTourViewModel = new ManageTourViewModel(tourPlannerService);
-        viewModel = new TourPlannerViewModel(tourPlannerService, manageTourViewModel, tourLogViewModel);
-    }*/
 
 //FLAG: Refactorization- point 5 -->
     @Override
@@ -64,20 +51,6 @@ public class TourPlanerApplication extends Application {
         showStage(stage, root);
     }
 
-/*    public static Parent loadRootNode(TourPlannerViewModel viewModel, ManageTourViewModel manageTourViewModel, TourLogViewModel tourLogViewModel) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(TourPlanerApplication.class.getResource("tourplaner.fxml"));
-        fxmlLoader.setControllerFactory(controllerClass -> {
-            if (controllerClass == TourPlanerController.class) {
-                return new TourPlanerController(viewModel);
-            } else if (controllerClass == ManageTourController.class) {
-                return new ManageTourController(manageTourViewModel, viewModel);
-            }else if (controllerClass == TourLogController.class) {
-                return new TourLogController(tourLogViewModel, viewModel);
-            } else {
-                throw new IllegalArgumentException("Unknown controller class: " + controllerClass);
-            }
-        });
-    }*/
 //FLAG: Refactorization- point 5 -->
     public static Parent loadRootNode(ConfigurableApplicationContext springContext) throws IOException {
         FXMLLoader loader = new FXMLLoader(TourPlanerApplication.class.getResource("tourplaner.fxml"));

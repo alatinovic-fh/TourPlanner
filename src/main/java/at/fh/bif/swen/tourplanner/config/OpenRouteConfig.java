@@ -1,7 +1,7 @@
 package at.fh.bif.swen.tourplanner.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component; //Question: what does this do?
+import org.springframework.stereotype.Component; //Question:
 
 @Component
 @ConfigurationProperties(prefix = "openroute")

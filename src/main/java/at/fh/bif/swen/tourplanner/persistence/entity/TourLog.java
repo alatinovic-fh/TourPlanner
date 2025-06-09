@@ -16,9 +16,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name="tourlogs")
 public class TourLog {
-  @Id
-// QUESTION: Should we generate ID here or as we have had it in addTourLog()?
-//    @GeneratedValue(stratagy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
@@ -40,11 +40,16 @@ public class TourLog {
     @Column(name = "rating")
     private double rating;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tour_id", nullable = false)
+    private Tour tour;
 
+    public TourLog(LocalDate date, String comment, String difficulty, double totalDistance, Duration totalTimeLong, double rating){
+        this.date = date;
+        this.comment = comment;
+        this.difficulty = difficulty;
+        this.totalDistance = totalDistance;
+        this.totalTime = totalTimeLong;
+        this.rating = rating;
+    }
 }
-
-/*
-
-public record TourLog(long id, LocalDate date, String comment, String difficulty, double totalDistance, Duration totalTime, int rating) {
-
-}*/

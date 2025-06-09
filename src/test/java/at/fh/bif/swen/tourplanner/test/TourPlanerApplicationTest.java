@@ -2,6 +2,7 @@ package at.fh.bif.swen.tourplanner.test;
 
 import at.fh.bif.swen.tourplanner.TourPlanerApplication;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
+import at.fh.bif.swen.tourplanner.persistence.repository.TourRepository;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
 import at.fh.bif.swen.tourplanner.view.ManageTourController;
 import at.fh.bif.swen.tourplanner.view.TourPlanerController;

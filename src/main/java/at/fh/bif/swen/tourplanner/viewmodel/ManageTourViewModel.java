@@ -5,9 +5,11 @@ import at.fh.bif.swen.tourplanner.persistence.entity.TransportType;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
 
 import javafx.beans.property.*;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 
+@Component
 public class ManageTourViewModel {
 
     private final TourPlannerService service;
@@ -65,8 +67,11 @@ public class ManageTourViewModel {
     }
 
     public void saveChanges() {
-        Tour tour = new Tour(selectedTour.id(), tourName.get(), tourDescription.get(), tourFrom.get(), tourTo.get(), tourTransportType.get(), 4, Duration.ofMinutes(30), "src/main/resources/map.html");
-        this.selectedTour = tour;
+        this.selectedTour.setDescription(tourDescription.get());
+        this.selectedTour.setName(tourName.get());
+        this.selectedTour.setFrom_location(tourFrom.get());
+        this.selectedTour.setTo_location(tourTo.get());
+        this.selectedTour.setEstimatedTime(Duration.ofMinutes(30));
         service.updateTour(selectedTour);
         saved.set(true);
     }
@@ -80,10 +85,10 @@ public class ManageTourViewModel {
     }
 
     private void loadFromTour(Tour tour) {
-        tourName.set(tour.name());
-        tourDescription.set(tour.description());
-        tourFrom.set(tour.from());
-        tourTo.set(tour.to());
-        tourTransportType.set(tour.type());
+        tourName.set(tour.getName());
+        tourDescription.set(tour.getDescription());
+        tourFrom.set(tour.getFrom_location());
+        tourTo.set(tour.getTo_location());
+        tourTransportType.set(tour.getType());
     }
 }
