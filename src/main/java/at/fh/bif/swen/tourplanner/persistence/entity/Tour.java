@@ -7,7 +7,6 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "tour")
@@ -40,7 +39,18 @@ public class Tour {
     @Column(name = "mapPath")
     private String mapPath;
 
-    //TODO: seperation of Concern --> move out the string return
+
+    public Tour(String name, String description, String from_location, String to_location, TransportType type, double distance, Duration estimatedTime, String mapPath) {
+        this.name = name;
+        this.description = description;
+        this.from_location = from_location;
+        this.to_location = to_location;
+        this.type = type;
+        this.distance = distance;
+        this.estimatedTime = estimatedTime;
+        this.mapPath = mapPath;
+    }
+
     public String details() {
 
         long hours = estimatedTime.toHours();

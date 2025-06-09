@@ -67,8 +67,11 @@ public class ManageTourViewModel {
     }
 
     public void saveChanges() {
-        Tour tour = new Tour(selectedTour.getId(), tourName.get(), tourDescription.get(), tourFrom.get(), tourTo.get(), tourTransportType.get(), 4, Duration.ofMinutes(30), "src/main/resources/map.html");
-        this.selectedTour = tour;
+        this.selectedTour.setDescription(tourDescription.get());
+        this.selectedTour.setName(tourName.get());
+        this.selectedTour.setFrom_location(tourFrom.get());
+        this.selectedTour.setTo_location(tourTo.get());
+        this.selectedTour.setEstimatedTime(Duration.ofMinutes(30));
         service.updateTour(selectedTour);
         saved.set(true);
     }

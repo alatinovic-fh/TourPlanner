@@ -44,7 +44,7 @@ public class TourLogViewModel {
         }catch (NumberFormatException e){
             e.printStackTrace();
         }
-        TourLog newTourLog = new TourLog(IDGenerator.nextTourLogId(), LocalDate.now(),comment.get(), difficulty.get(), totalDistanceDouble, Duration.ofMinutes(totalTimeLong), 1);
+        TourLog newTourLog = new TourLog(LocalDate.now(),comment.get(), difficulty.get(), totalDistanceDouble, Duration.ofMinutes(totalTimeLong), 1);
         allTourLogs.add(newTourLog);
         service.addTourLog(newTourLog, this.selectedTour);
         this.addedLog.set(true);
@@ -60,9 +60,15 @@ public class TourLogViewModel {
             e.printStackTrace();
         }
 
-        TourLog tourLog = new TourLog(selectedTourLog.getId(), LocalDate.now(),comment.get(), difficulty.get(), totalDistanceDouble, Duration.ofMinutes(totalTimeLong), 1);
-        this.selectedTourLog = tourLog;
-        service.updateTourLog(this.selectedTourLog, this.selectedTour);
+        this.selectedTourLog.setTour(selectedTour);
+        this.selectedTourLog.setDate(selectedTourLog.getDate());
+        this.selectedTourLog.setComment(comment.get());
+        this.selectedTourLog.setDifficulty(difficulty.get());
+        this.selectedTourLog.setTotalDistance(totalDistanceDouble);
+        this.selectedTourLog.setTotalTime(Duration.ofMinutes(totalTimeLong));
+        this.selectedTourLog.setRating(selectedTourLog.getRating());
+
+        service.updateTourLog(this.selectedTourLog);
         savedLog.set(true);
     }
 

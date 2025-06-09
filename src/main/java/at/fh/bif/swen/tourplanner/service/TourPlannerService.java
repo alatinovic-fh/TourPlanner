@@ -2,8 +2,11 @@ package at.fh.bif.swen.tourplanner.service;
 
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.persistence.entity.TourLog;
+import at.fh.bif.swen.tourplanner.persistence.repository.TourLogRepository;
+import at.fh.bif.swen.tourplanner.persistence.repository.TourRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -13,14 +16,17 @@ import java.util.Map;
 @Service
 public class TourPlannerService {
 
-    private final ObservableList<Tour> tours = FXCollections.observableArrayList();
-    private final Map<Long, ObservableList<TourLog>> tourLogs = new HashMap<>();
+    @Autowired
+    private TourRepository tourRepository;
+
+    @Autowired
+    private TourLogRepository tourLogRepository;
+
     public TourPlannerService() {
     }
 
     public ObservableList<Tour> loadTours() {
-        // TODO in future implement fetching data from database
-        return tours;
+        return FXCollections.observableArrayList(tourRepository.findAll());
     }
 
     public ObservableList<Tour> filterTours(ObservableList<Tour> tourList, String query) {
@@ -28,8 +34,7 @@ public class TourPlannerService {
     }
 
     public void addTour(Tour tour) {
-        tours.add(tour);
-        tourLogs.put(tour.getId(), FXCollections.observableArrayList());
+        this.tourRepository.save(tour);
     }
 
     public void updateTour(Tour updatedTour) {
@@ -37,48 +42,39 @@ public class TourPlannerService {
             System.err.println("updateTour: updatedTour ist null!");
             return;
         }
-        for (Tour current : tours) {
-            if (current.getId() == updatedTour.getId()) {
-                tours.set(tours.indexOf(current), updatedTour);
-            }
-        }
+        this.tourRepository.save(updatedTour);
     }
 
     public void deleteTour(Tour tour) {
         if (tour != null) {
-            tours.remove(tour);
+            this.tourRepository.delete(tour);
         }
     }
 
 
     public ObservableList<TourLog> loadTourLogs(Tour selectedTour){
         if (selectedTour != null) {
-            return this.tourLogs.get(selectedTour.getId());
+            return FXCollections.observableArrayList(this.tourLogRepository.findByTour(selectedTour));
         }
         return null;
     }
 
     public void addTourLog(TourLog tourLog, Tour selectedTour) {
         if (tourLog != null) {
-            this.tourLogs.get(selectedTour.getId()).add(tourLog);
+            tourLog.setTour(selectedTour);
+            this.tourLogRepository.save(tourLog);
         }
     }
 
-    public void updateTourLog(TourLog newTourLog, Tour selectedTour) {
-        List<TourLog> tourlog = this.tourLogs.get(selectedTour.getId());
+    public void updateTourLog(TourLog newTourLog) {
         if (newTourLog != null) {
-            for (TourLog current : tourlog) {
-                if (current.getId() == newTourLog.getId()) {
-                    tourlog.set(tourlog.indexOf(current), newTourLog);
-                }
-            }
+            this.tourLogRepository.save(newTourLog);
         }
     }
 
     public void deleteTourLog(TourLog deletedTourLog, Tour selectedTour) {
         if (selectedTour != null) {
-        List<TourLog> tourlog = this.tourLogs.get(selectedTour.getId());
-            tourlog.removeIf(current -> current.getId() == deletedTourLog.getId());
+            this.tourLogRepository.delete(deletedTourLog);
         }
     }
 }

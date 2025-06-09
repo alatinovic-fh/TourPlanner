@@ -26,6 +26,7 @@ public class TourPlannerViewModel {
         this.tourPlannerService = tourPlannerService;
         this.manageTourViewModel = manageTourViewModel;
 
+        this.refreshTourList();
         this.searchQuery.addListener((obs, oldVal, newVal) -> filterTours());
         this.manageTourViewModel.savedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {

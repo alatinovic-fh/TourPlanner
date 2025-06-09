@@ -40,5 +40,16 @@ public class TourLog {
     @Column(name = "rating")
     private double rating;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tour_id", nullable = false)
+    private Tour tour;
 
+    public TourLog(LocalDate date, String comment, String difficulty, double totalDistance, Duration totalTimeLong, double rating){
+        this.date = date;
+        this.comment = comment;
+        this.difficulty = difficulty;
+        this.totalDistance = totalDistance;
+        this.totalTime = totalTimeLong;
+        this.rating = rating;
+    }
 }
