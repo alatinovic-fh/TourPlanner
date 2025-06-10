@@ -9,10 +9,6 @@ import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @Service
 public class TourPlannerService {
 
@@ -47,6 +43,7 @@ public class TourPlannerService {
 
     public void deleteTour(Tour tour) {
         if (tour != null) {
+            this.tourLogRepository.deleteAllByTour(tour);
             this.tourRepository.delete(tour);
         }
     }

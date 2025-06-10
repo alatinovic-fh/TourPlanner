@@ -40,6 +40,7 @@ public class TourLogController {
 
     @FXML
     public void initialize() {
+        tourLogTable.setItems(this.tourLogViewModel.reloadTourLogs());
         commentField.textProperty().bindBidirectional(tourLogViewModel.commentProperty());
         difficultyField.textProperty().bindBidirectional(tourLogViewModel.difficultyProperty());
         distanceField.textProperty().bindBidirectional(tourLogViewModel.totalDistanceProperty());
