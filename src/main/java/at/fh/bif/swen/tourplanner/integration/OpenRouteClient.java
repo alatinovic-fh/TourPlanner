@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import at.fh.bif.swen.tourplanner.config.OpenRouteConfig;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -28,8 +29,8 @@ public class OpenRouteClient implements OpenRoute { //Class 'OpenRouteClient' mu
     private final OpenRouteConfig config;
     private final RestTemplate restTemplate;
 
-    public OpenRouteClient(OpenRouteConfig config) {
-
+    public OpenRouteClient(@Qualifier("openRouteConfig") OpenRouteConfig config) {
+        System.out.println("OpenRouteConfig [CLIENT] Received API key: " + config.getApiKey());
         this.config = config;
         this.restTemplate = new RestTemplate();
     }
@@ -46,8 +47,10 @@ public class OpenRouteClient implements OpenRoute { //Class 'OpenRouteClient' mu
             System.err.println("unsupported Characters in postal adress:" + e.getMessage());
             return null;
         }
+        System.out.println("Using OpenRouteService API key: " + config.getApiKey());//NOTE DEBUG PROCESS
 
         String url = String.format("https://api.openrouteservice.org/geocode/search?api_key=%s&text=%s", config.getApiKey(), postalAddress);
+        System.out.println(url);//NOTE DEBUG PROCESS
 
         try(HttpClient client = HttpClient.newHttpClient()) {
             HttpRequest request = HttpRequest.newBuilder()
@@ -91,7 +94,7 @@ public class OpenRouteClient implements OpenRoute { //Class 'OpenRouteClient' mu
         formatter.setMaximumFractionDigits(6);
 
         String url = String.format("https://api.openrouteservice.org/v2/directions/%s?api_key=%s&start=%s,%s&end=%s,%s",
-                type.toString(), config.getApiKey(),
+                type.getProfile(), config.getApiKey(),
                 formatter.format(start.lat()),formatter.format(start.lon()),
                 formatter.format(end.lat()),formatter.format(end.lon()));
 

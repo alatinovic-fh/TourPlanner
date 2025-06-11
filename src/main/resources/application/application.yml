@@ -1,2 +1,0 @@
-openroute:
-  api-key: ${OPENROUT_API_KEY:default-fallback}
