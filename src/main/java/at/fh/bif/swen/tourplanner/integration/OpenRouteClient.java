@@ -30,16 +30,16 @@ public class OpenRouteClient implements OpenRoute { //Class 'OpenRouteClient' mu
     private final RestTemplate restTemplate;
 
     public OpenRouteClient(@Qualifier("openRouteConfig") OpenRouteConfig config) {
-        System.out.println("OpenRouteConfig [CLIENT] Received API key: " + config.getApiKey());
+//        System.out.println("OpenRouteConfig [CLIENT] Received API key: " + config.getApiKey()); //NOTE used for debugging
         this.config = config;
         this.restTemplate = new RestTemplate();
     }
 
 
 
+//TODO: QUESTION create a separate class & for SOLID ??? ==> break down OpenRouteINTERFACE??
     @Override
     public GeoCoord geoCoord(String postalAddress){
-        //TODO: from address to geoCoordinate
 
         try{
             postalAddress = URLEncoder.encode(postalAddress,"UTF-8");
@@ -47,10 +47,8 @@ public class OpenRouteClient implements OpenRoute { //Class 'OpenRouteClient' mu
             System.err.println("unsupported Characters in postal adress:" + e.getMessage());
             return null;
         }
-        System.out.println("Using OpenRouteService API key: " + config.getApiKey());//NOTE DEBUG PROCESS
 
         String url = String.format("https://api.openrouteservice.org/geocode/search?api_key=%s&text=%s", config.getApiKey(), postalAddress);
-        System.out.println(url);//NOTE DEBUG PROCESS
 
         try(HttpClient client = HttpClient.newHttpClient()) {
             HttpRequest request = HttpRequest.newBuilder()
@@ -87,13 +85,13 @@ public class OpenRouteClient implements OpenRoute { //Class 'OpenRouteClient' mu
         }
     }
 
-
+//TODO: QUESTION create a separate class & for SOLID ??? ==> break down OpenRouteINTERFACE??
     public JsonNode getRoute(TransportType type, GeoCoord start, GeoCoord end) {
 
         NumberFormat formatter = NumberFormat.getNumberInstance(Locale.UK);
         formatter.setMaximumFractionDigits(6);
 
-        String url = String.format("https://api.openrouteservice.org/v2/directions/%s?api_key=%s&start=%s,%s&end=%s,%s",
+        String url = String.format("https://api.openrouteservice.org/v2/directions/%s?api_key=%s&format=geojson&start=%s,%s&end=%s,%s", //NOTE: added format=geojson
                 type.getProfile(), config.getApiKey(),
                 formatter.format(start.lat()),formatter.format(start.lon()),
                 formatter.format(end.lat()),formatter.format(end.lon()));
@@ -109,6 +107,7 @@ public class OpenRouteClient implements OpenRoute { //Class 'OpenRouteClient' mu
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode root = mapper.readTree(response.body());
                 System.out.println(root.toPrettyString());
+                //Note Where the json file with routing info is returned
                 return root;
             } else {
                 System.err.println("Failed to parse REST Response: " + response.body());

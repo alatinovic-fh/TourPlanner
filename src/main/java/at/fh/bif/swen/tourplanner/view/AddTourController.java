@@ -42,7 +42,8 @@ public class AddTourController {
                 transportTypeCombo.getValue(),
                 4,
                 Duration.ofMinutes(30),
-                "src/main/resources/map.html"
+                "http://localhost:8080/map.html" //Question: Why change? Answer: springboot automatically serves files in src/main/resources/static/*
+                //"src/main/resources/map.html"
         );
         closeWindow();
     }

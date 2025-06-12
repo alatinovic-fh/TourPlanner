@@ -78,8 +78,6 @@ public class TourPlanerController {
 
     @FXML
     public void initialize() {
-        //fixed prepared Leaflet Route
-        // Not sure if this will be the right solution for in the future but for now it looks okay
         tourListView.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue != null) {
                 URL url = null;

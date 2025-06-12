@@ -2,7 +2,7 @@ package at.fh.bif.swen.tourplanner.config;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component; //Question:
+import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "openroute")
