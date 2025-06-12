@@ -1,4 +1,4 @@
-package at.fh.bif.swen.tourplanner.model;
+package at.fh.bif.swen.tourplanner.persistence.entity;
 
 public enum TransportType {
     CAR("car"),

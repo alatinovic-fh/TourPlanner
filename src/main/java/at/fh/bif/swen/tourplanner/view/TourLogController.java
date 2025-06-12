@@ -1,13 +1,17 @@
 package at.fh.bif.swen.tourplanner.view;
 
-import at.fh.bif.swen.tourplanner.model.TourLog;
+import at.fh.bif.swen.tourplanner.persistence.entity.TourLog;
 import at.fh.bif.swen.tourplanner.viewmodel.TourLogViewModel;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+
 import java.time.Duration;
 
+@Controller
 public class TourLogController {
 
     private final TourLogViewModel tourLogViewModel;
@@ -36,18 +40,19 @@ public class TourLogController {
 
     @FXML
     public void initialize() {
+        tourLogTable.setItems(this.tourLogViewModel.reloadTourLogs());
         commentField.textProperty().bindBidirectional(tourLogViewModel.commentProperty());
         difficultyField.textProperty().bindBidirectional(tourLogViewModel.difficultyProperty());
         distanceField.textProperty().bindBidirectional(tourLogViewModel.totalDistanceProperty());
         durationField.textProperty().bindBidirectional(tourLogViewModel.totalTimeProperty());
         tourLogViewModel.bindToSelectedTourProperty(viewModel.selectedTourProperty());
 
-        dateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().date().toString()));
-        commentColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().comment()));
-        difficultyColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().difficulty()));
-        distanceColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().totalDistance())));
-        durationColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDuration(data.getValue().totalTime())));
-        ratingColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().rating())));
+        dateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDate().toString()));
+        commentColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getComment()));
+        difficultyColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDifficulty()));
+        distanceColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getTotalDistance())));
+        durationColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDuration(data.getValue().getTotalTime())));
+        ratingColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getRating())));
 
 
         this.tourLogViewModel.savedLogProperty().addListener((obs, oldVal, newVal) -> {

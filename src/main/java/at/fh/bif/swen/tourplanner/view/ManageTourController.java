@@ -1,13 +1,16 @@
 package at.fh.bif.swen.tourplanner.view;
 
 import at.fh.bif.swen.tourplanner.viewmodel.ManageTourViewModel;
-import at.fh.bif.swen.tourplanner.model.TransportType;
+import at.fh.bif.swen.tourplanner.persistence.entity.TransportType;
 
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class ManageTourController {
 
     private final ManageTourViewModel manageTourViewModel;
@@ -18,7 +21,6 @@ public class ManageTourController {
     @FXML private TextField fromField;
     @FXML private TextField toField;
     @FXML private ComboBox<TransportType> transportCombo;
-
 
     public ManageTourController(ManageTourViewModel manageTourViewModel, TourPlannerViewModel viewModel) {
         this.manageTourViewModel = manageTourViewModel;
