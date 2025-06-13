@@ -8,8 +8,8 @@ MOUNTAINBIKE("cycling-mountain"),
     HIKE("foot-hiking"),
     WALK("foot-walking"),
 WHEELCHAIR("wheelchair");
-//NOTE:      Not included in OpenRouteService - to be deleted
-// https://giscience.github.io/openrouteservice/run-instance/configuration/engine/profiles/#ors-engine-profiles
+//NOTE:      Not included in OpenRouteService (=>  https://giscience.github.io/openrouteservice/run-instance/configuration/engine/profiles/#ors-engine-profiles)
+//    -> to be deleted
 //    NONE("none"),
 //    TRAIN("driving-train"),
 

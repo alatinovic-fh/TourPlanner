@@ -85,7 +85,7 @@ public class OpenRouteClient implements OpenRoute { //Class 'OpenRouteClient' mu
         }
     }
 
-//TODO: QUESTION create a separate class & for SOLID ??? ==> break down OpenRouteINTERFACE??
+//TODO:?? QUESTION create a separate class & for SOLID ??? ==> break down OpenRouteINTERFACE??
     public JsonNode getRoute(TransportType type, GeoCoord start, GeoCoord end) {
 
         NumberFormat formatter = NumberFormat.getNumberInstance(Locale.UK);
@@ -106,7 +106,7 @@ public class OpenRouteClient implements OpenRoute { //Class 'OpenRouteClient' mu
             if (response.statusCode() == 200) {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode root = mapper.readTree(response.body());
-                System.out.println(root.toPrettyString());
+                System.out.println(root.toPrettyString()); //Note: just to see Debug verification of json file: success
                 //Note Where the json file with routing info is returned
                 return root;
             } else {

@@ -1,13 +1,17 @@
 package at.fh.bif.swen.tourplanner.service;
 
+import at.fh.bif.swen.tourplanner.integration.DirectionalJSConverter;
+import at.fh.bif.swen.tourplanner.integration.GeoCoord;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.persistence.entity.TourLog;
 import at.fh.bif.swen.tourplanner.persistence.repository.TourLogRepository;
 import at.fh.bif.swen.tourplanner.persistence.repository.TourRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import at.fh.bif.swen.tourplanner.integration.OpenRouteClient;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +26,11 @@ public class TourPlannerService {
     @Autowired
     private TourLogRepository tourLogRepository;
 
+   // @Autowired
+    private OpenRouteClient openRouteClient;
+
+
+    @Autowired
     public TourPlannerService() {
     }
 
@@ -32,6 +41,41 @@ public class TourPlannerService {
     public ObservableList<Tour> filterTours(ObservableList<Tour> tourList, String query) {
         return tourList.filtered(t -> t.getName().toLowerCase().contains(query.toLowerCase()));
     }
+
+    //GOAL: get Json for Leaflet From Integration.OpenRouteClient
+    public JsonNode getRouteFromAdress(Tour tour) {
+
+        try{
+
+            GeoCoord start = openRouteClient.geoCoord(tour.getFrom_location());
+            GeoCoord end = openRouteClient.geoCoord(tour.getTo_location());
+
+            if(start == null || end == null) {
+                System.err.println("ERROR: Failed to find address");
+
+                if(start == null) System.err.println("ERROR:starting address not found");   //NOTE not actually needed but.... FLAG:|> notification Visualisation would be nice
+                if(end == null) System.err.println("ERROR:destination address not found");  //NOTE not actually needed but.... FLAG:|> notification Visualisation would be nice
+                return null;
+            }
+
+            System.out.printf("Route found from %s to %s \n", start, end); // NOTE not actually needed but.... FLAG:|> notification Visualisation would be nice
+
+            return openRouteClient.getRoute(tour.getType(),start,end);
+
+        }catch(Exception e){
+            System.err.println("ERROR: while finding route" + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    //GOAL: save adjusted JsonFile to JavaScript file --> to be used for the Leaflet + with route
+    public void saveJsonRoute(JsonNode routeJsonNode) {
+        new DirectionalJSConverter().exportJS(routeJsonNode, "src/main/resources/static/route.js");
+    }
+
+
 
     public void addTour(Tour tour) {
         this.tourRepository.save(tour);

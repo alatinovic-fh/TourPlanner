@@ -2,6 +2,7 @@ package at.fh.bif.swen.tourplanner.viewmodel;
 
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
+import com.fasterxml.jackson.databind.JsonNode;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,6 +44,8 @@ public class TourPlannerViewModel {
     }
 
     public void addTour(Tour tour) {
+        callOpenRouteAPI(tour);//GOAL: call API and if places found then save routeJson |-->
+
         tourPlannerService.addTour(tour);
         allTours.add(tour);
         filterTours();
@@ -78,5 +81,19 @@ public class TourPlannerViewModel {
     public void refreshTourList() {
         allTours.setAll(tourPlannerService.loadTours());
         filterTours();
+    }
+
+
+
+    //GOAL: --->| call OpenRoute
+    public void callOpenRouteAPI(Tour tour) {
+        JsonNode routeJson = tourPlannerService.getRouteFromAdress(tour);
+
+        if (routeJson != null) {
+            tourPlannerService.saveJsonRoute(routeJson);
+        }else {
+            System.err.println("No route found for " + tour);
+            //TODO:
+        }
     }
 }
