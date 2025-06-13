@@ -9,14 +9,12 @@ import at.fh.bif.swen.tourplanner.persistence.repository.TourRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import at.fh.bif.swen.tourplanner.integration.OpenRouteClient;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+@Data
 @Service
 public class TourPlannerService {
 
@@ -24,13 +22,14 @@ public class TourPlannerService {
     private TourRepository tourRepository;
 
     @Autowired
-    private TourLogRepository tourLogRepository
-            ;
+    private TourLogRepository tourLogRepository;
+
+
     @Autowired
     private OpenRouteClient openRouteClient;
 
 
-    @Autowired
+
     public TourPlannerService() {
     }
 
@@ -47,8 +46,8 @@ public class TourPlannerService {
 
         try{
 
-            GeoCoord start = openRouteClient.geoCoord(tour.getFrom_location());
-            GeoCoord end = openRouteClient.geoCoord(tour.getTo_location());
+            GeoCoord start = openRouteClient.geoCoord(tour.getFromLocation());
+            GeoCoord end = openRouteClient.geoCoord(tour.getToLocation());
 
             if(start == null || end == null) {
                 System.err.println("ERROR: Failed to find address");
