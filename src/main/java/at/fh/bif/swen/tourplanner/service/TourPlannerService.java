@@ -24,9 +24,9 @@ public class TourPlannerService {
     private TourRepository tourRepository;
 
     @Autowired
-    private TourLogRepository tourLogRepository;
-
-   // @Autowired
+    private TourLogRepository tourLogRepository
+            ;
+    @Autowired
     private OpenRouteClient openRouteClient;
 
 
