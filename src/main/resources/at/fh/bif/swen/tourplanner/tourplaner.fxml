@@ -27,9 +27,13 @@
         <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="General">
-                    <VBox>
-                  <WebView fx:id="mapView" prefHeight="343.0" prefWidth="832.0" />
-                  <Label fx:id="tourDataLabel" alignment="TOP_LEFT" prefHeight="325.0" prefWidth="727.0" VBox.vgrow="ALWAYS">
+                    <VBox fx:id="mapContainer" VBox.vgrow="ALWAYS">
+                  <WebView fx:id="mapView" prefWidth="800" prefHeight="600" VBox.vgrow="ALWAYS" />
+                  <Label fx:id="tourDataLabel"
+                         alignment="TOP_LEFT"
+                         VBox.vgrow="ALWAYS"
+                         prefWidth="727.0" prefHeight="325.0">
+
                      <font>
                         <Font size="25.0" />
                      </font></Label>

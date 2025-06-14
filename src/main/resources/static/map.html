@@ -7,10 +7,16 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <style>
-        #map {
-            height: 100vh;
-            width: 100vw;
+        html, body/*, #map*/ {
+            height: 100%;
+            /*width: 100%;*/
             margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
         }
         body {
             margin: 0;
@@ -18,33 +24,42 @@
     </style>
 </head>
 <body>
+
 <div id="map"></div>
 <!--<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>  || Original -->
+
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-        crossorigin=""></script>
+        crossorigin="">
+</script>
+
 <script src="route.js"></script>
 
 
 <script>
     // TODO Make this flexible when new Tour is added
+
+
     const map = L.map('map')
     const route = directions;
     const bbox = route.bbox;
 
     // ==> JavaFX WebView only loads loacal files BUT at runtime Maven copies the files to target/classes/static
+
     map.fitBounds([
         [bbox[1], bbox[0]],
         [bbox[3], bbox[2]]
     ]);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom:19,
         attribution: '2024 © FH Technikum Wien'
     }).addTo(map);
 
     L.geoJSON(route).addTo(map);
 
-
+    setTimeout(()=> map.invalidateSize(),500);
 </script>
 
 </body>

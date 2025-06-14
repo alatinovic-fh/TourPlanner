@@ -3,6 +3,7 @@ package at.fh.bif.swen.tourplanner.view;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.beans.binding.Bindings;
+import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -88,12 +89,32 @@ public class TourPlanerController {
             if (newValue != null) {
                 try {
                     File file = new File("target/classes/static/map.html");
+
+
                     if (!file.exists()) {
                         System.err.println("map.html not found in target/classes/static/");
                         return;
                     }
+
+
                     URL url = file.toURI().toURL();
+
                     mapView.getEngine().load(url.toString());
+
+                    mapView.setContextMenuEnabled(false);
+
+                    mapView.getEngine().setOnAlert(event -> {
+                        System.out.println("JS Alert:" + event.getData());
+                    });
+
+
+                    mapView.getEngine().getLoadWorker().stateProperty().addListener((o, oldState, newState) -> {
+                        if (newState == Worker.State.SUCCEEDED) {
+                            mapView.getEngine().executeScript("map.invalidateSize();");
+                        }
+                    });
+
+
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }

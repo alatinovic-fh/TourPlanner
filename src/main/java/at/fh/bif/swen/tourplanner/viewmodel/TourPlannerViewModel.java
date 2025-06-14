@@ -93,7 +93,6 @@ public class TourPlannerViewModel {
             tourPlannerService.saveJsonRoute(routeJson);
         }else {
             System.err.println("No route found for " + tour);
-            //TODO:
         }
     }
 }
