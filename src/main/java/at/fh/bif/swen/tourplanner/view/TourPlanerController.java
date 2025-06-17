@@ -83,37 +83,18 @@ public class TourPlanerController {
 
     @FXML
     public void initialize() {
-        // FLAG |> where the leaflet is called.
 
         tourListView.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue != null) {
+                this.viewModel.loadMap(newValue);
                 try {
-                    File file = new File("target/classes/static/map.html");
-
-
+                    File file = new File("src/main/resources/static/map.html");
                     if (!file.exists()) {
                         System.err.println("map.html not found in target/classes/static/");
                         return;
                     }
-
-
                     URL url = file.toURI().toURL();
-
-                    mapView.getEngine().load(url.toString());
-
-                    mapView.setContextMenuEnabled(false);
-
-                    mapView.getEngine().setOnAlert(event -> {
-                        System.out.println("JS Alert:" + event.getData());
-                    });
-
-
-                    mapView.getEngine().getLoadWorker().stateProperty().addListener((o, oldState, newState) -> {
-                        if (newState == Worker.State.SUCCEEDED) {
-                            mapView.getEngine().executeScript("map.invalidateSize();");
-                        }
-                    });
-
+                    mapView.getEngine().load(url.toString()+"?v=" + System.currentTimeMillis());
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();

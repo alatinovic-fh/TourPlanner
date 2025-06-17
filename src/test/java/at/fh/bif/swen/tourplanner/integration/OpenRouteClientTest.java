@@ -2,7 +2,6 @@ package at.fh.bif.swen.tourplanner.integration;
 
 import at.fh.bif.swen.tourplanner.config.OpenRouteConfig;
 import at.fh.bif.swen.tourplanner.persistence.entity.TransportType;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,8 +32,8 @@ class OpenRouteClientTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals(16.378317,result.lat(),0.0001 );
-        assertEquals(48.238992,result.lon(), 0.0001 );
+        assertEquals(16.378317,result.latitude(),0.0001 );
+        assertEquals(48.238992,result.longitude(), 0.0001 );
     }
 
 
@@ -48,8 +47,8 @@ class OpenRouteClientTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals( result.lat(), 16.372924);
-        assertEquals( result.lon(), 48.209379);
+        assertEquals( result.latitude(), 16.372924);
+        assertEquals( result.longitude(), 48.209379);
     }
 
     @Test

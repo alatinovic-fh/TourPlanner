@@ -36,12 +36,9 @@ public class Tour {
     @Column(name = "estimatedTime")
     private Duration estimatedTime;
 
-    @Column(name = "mapPath")
-    private String mapPath;
 
 
-
-    public Tour(String name, String description, String fromLocation, String toLocation, TransportType type, double distance, Duration estimatedTime, String mapPath) {
+    public Tour(String name, String description, String fromLocation, String toLocation, TransportType type, double distance, Duration estimatedTime) {
         this.name = name;
         this.description = description;
         this.fromLocation = fromLocation;
@@ -49,7 +46,6 @@ public class Tour {
         this.type = type;
         this.distance = distance;
         this.estimatedTime = estimatedTime;
-        this.mapPath = mapPath;
     }
 
 
