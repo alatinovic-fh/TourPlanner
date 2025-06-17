@@ -44,6 +44,7 @@ public class TourPlannerViewModel {
     }
 
     public void addTour(Tour tour) {
+        //TODO API should be called by service layer not ViewModel
         callOpenRouteAPI(tour);//GOAL: call API and if places found then save routeJson |-->
 
         tourPlannerService.addTour(tour);
