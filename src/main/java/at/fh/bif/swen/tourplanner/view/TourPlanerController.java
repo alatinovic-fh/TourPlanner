@@ -3,6 +3,7 @@ package at.fh.bif.swen.tourplanner.view;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.beans.binding.Bindings;
+import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 
 // TODO Make language consistent in Application !!!
 // TODO Errorhandling
@@ -41,6 +44,8 @@ public class TourPlanerController {
 
     @FXML
     private javafx.scene.control.ListView<Tour> tourListView;
+
+
 
     @FXML
     protected void onExitClick(ActionEvent actionEvent) {
@@ -78,17 +83,22 @@ public class TourPlanerController {
 
     @FXML
     public void initialize() {
-        //fixed prepared Leaflet Route
-        // Not sure if this will be the right solution for in the future but for now it looks okay
+
         tourListView.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue != null) {
-                URL url = null;
+                this.viewModel.loadMap(newValue);
                 try {
-                    url = new File(newValue.getMapPath()).toURI().toURL();
+                    File file = new File("src/main/resources/static/map.html");
+                    if (!file.exists()) {
+                        System.err.println("map.html not found in target/classes/static/");
+                        return;
+                    }
+                    URL url = file.toURI().toURL();
+                    mapView.getEngine().load(url.toString()+"?v=" + System.currentTimeMillis());
+
                 } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
-                mapView.getEngine().load(url.toString());
                 viewModel.setSelectedTour(newValue);
             }
         });

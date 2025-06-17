@@ -79,4 +79,9 @@ public class TourPlannerViewModel {
         allTours.setAll(tourPlannerService.loadTours());
         filterTours();
     }
+
+    public void loadMap(Tour tour) {
+        this.tourPlannerService.loadMap(tour);
+    }
+
 }

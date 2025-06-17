@@ -11,7 +11,7 @@
     <top>
         <VBox>
             <MenuBar minWidth="350">
-                <Menu text="File" fx:id="btnFileItem">
+                <Menu fx:id="btnFileItem" text="File">
                     <MenuItem fx:id="newTourMenuItem" onAction="#onNewTourMenuItemClick" text="New Tour" />
                     <MenuItem fx:id="exitMenuItem" onAction="#onExitClick" text="Exit" />
                 </Menu>
@@ -27,19 +27,20 @@
         <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="General">
-                    <VBox>
-                  <WebView fx:id="mapView" prefHeight="343.0" prefWidth="832.0" />
-                  <Label fx:id="tourDataLabel" alignment="TOP_LEFT" prefHeight="325.0" prefWidth="727.0" VBox.vgrow="ALWAYS">
+                    <VBox fx:id="mapContainer" VBox.vgrow="ALWAYS">
+                  <WebView fx:id="mapView" prefHeight="324.0" prefWidth="832.0" VBox.vgrow="ALWAYS" />
+                  <Label fx:id="tourDataLabel" alignment="TOP_LEFT" prefHeight="325.0" prefWidth="833.0" VBox.vgrow="ALWAYS">
+
                      <font>
                         <Font size="25.0" />
                      </font></Label>
                     </VBox>
                 </Tab>
                 <Tab text="Tour Logs">
-                    <fx:include source="manage_tourlogs.fxml"/>
+                    <fx:include source="manage_tourlogs.fxml" />
                 </Tab>
                 <Tab text="Manage Tour">
-                    <fx:include source="manage_tour.fxml"/>
+                    <fx:include source="manage_tour.fxml" />
                 </Tab>
             </tabs>
         </TabPane>

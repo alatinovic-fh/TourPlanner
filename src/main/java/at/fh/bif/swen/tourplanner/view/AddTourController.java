@@ -41,8 +41,7 @@ public class AddTourController {
                 toField.getText(),
                 transportTypeCombo.getValue(),
                 4,
-                Duration.ofMinutes(30),
-                "src/main/resources/map.html"
+                Duration.ofMinutes(30)
         );
         closeWindow();
     }

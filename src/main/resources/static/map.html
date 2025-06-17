@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Simple Route Line with Leaflet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin="">
+</script>
+
+<script>
+    // Dynamisches Nachladen von route.js mit Timestamp (Cache-Busting)
+    const script = document.createElement("script");
+    script.src = "route.js?v=" + new Date().getTime();
+    script.onload = () => {
+        const map = L.map('map');
+        const route = directions;
+        const bbox = route.bbox;
+
+        map.fitBounds([
+            [bbox[1], bbox[0]],
+            [bbox[3], bbox[2]]
+        ]);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '2024 © FH Technikum Wien'
+        }).addTo(map);
+
+        L.geoJSON(route).addTo(map);
+
+        setTimeout(() => map.invalidateSize(), 500);
+    };
+
+    script.onerror = () => {
+        console.error("Fehler beim Laden von route.js");
+    };
+
+    document.body.appendChild(script);
+</script>
+
+</body>
+</html>

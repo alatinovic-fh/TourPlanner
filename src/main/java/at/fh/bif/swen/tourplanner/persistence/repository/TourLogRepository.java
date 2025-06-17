@@ -11,5 +11,4 @@ import java.util.List;
 public interface TourLogRepository extends JpaRepository<TourLog, Long> {
 
     List<TourLog> findByTour(Tour tour);
-    void deleteAllByTour(Tour tour);
 }

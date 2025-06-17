@@ -22,10 +22,10 @@ public class Tour {
     private String description;
 
     @Column(name = "from_location")
-    private String from_location;
+    private String fromLocation;    //Changed: Lombok incorrectly processed from_Location --> fromLocation
 
     @Column(name = "to_location")
-    private String to_location;
+    private String toLocation;      //Changed: Lombok incorrectly processed: to_location --> toLocation
 
     @Column(name = "type")
     private TransportType type;
@@ -36,20 +36,20 @@ public class Tour {
     @Column(name = "estimatedTime")
     private Duration estimatedTime;
 
-    @Column(name = "mapPath")
-    private String mapPath;
 
 
-    public Tour(String name, String description, String from_location, String to_location, TransportType type, double distance, Duration estimatedTime, String mapPath) {
+    public Tour(String name, String description, String fromLocation, String toLocation, TransportType type, double distance, Duration estimatedTime) {
         this.name = name;
         this.description = description;
-        this.from_location = from_location;
-        this.to_location = to_location;
+        this.fromLocation = fromLocation;
+        this.toLocation = toLocation;
         this.type = type;
         this.distance = distance;
         this.estimatedTime = estimatedTime;
-        this.mapPath = mapPath;
     }
+
+
+
 
     public String details() {
 
@@ -67,8 +67,8 @@ public class Tour {
                         """,
                 name,
                 description,
-                from_location,
-                to_location,
+                fromLocation,
+                toLocation,
                 type,
                 distance,
                 hours,

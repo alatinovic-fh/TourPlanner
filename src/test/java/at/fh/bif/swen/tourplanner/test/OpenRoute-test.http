@@ -1,0 +1,42 @@
+# Variables, to be used in all requests, like the API_KEY:
+@apikey=5b3ce3597851110001cf6248ec5af7de2cca457a89d08c5198bdd435
+
+### GeoCode-Search FHTW
+@address1=Höchstädtplatz%206%201200%20Wien
+
+GET https://api.openrouteservice.org/geocode/search?api_key={{apikey}}&text={{address1}}
+
+@startat=16.377631,48.239223
+
+
+### GeoCode-Search Zanoni Wien-Zentrum
+@address2=Rotenturmstrasse%201%201010%20Wien
+
+GET https://api.openrouteservice.org/geocode/search?api_key={{apikey}}&text={{address2}}
+
+@finishat=16.372924,48.209379
+
+
+
+
+### GeoCode-Search Stephansplatz 1010 Wien
+@address3=Stephansplatz%201010%20Wien
+
+GET https://api.openrouteservice.org/geocode/search?api_key={{apikey}}&text={{address3}}
+
+@finishat=16.37407,48.208351
+
+
+### GeoCode-Search Pfarrgasse 65 1230 Wien ––> Home
+@address4=Pfarrgasse%2065%201230%20Wien
+
+GET https://api.openrouteservice.org/geocode/search?api_key={{apikey}}&text={{address4}}
+
+@finishat=16.34432,48.143008
+
+
+
+### Directions from FHTW to Home
+@routeType=driving-car
+
+GET https://api.openrouteservice.org/v2/directions/{{routeType}}?api_key={{apikey}}&start=16.377631,48.239223&end=16.34432,48.143008

@@ -69,8 +69,8 @@ public class ManageTourViewModel {
     public void saveChanges() {
         this.selectedTour.setDescription(tourDescription.get());
         this.selectedTour.setName(tourName.get());
-        this.selectedTour.setFrom_location(tourFrom.get());
-        this.selectedTour.setTo_location(tourTo.get());
+        this.selectedTour.setFromLocation(tourFrom.get());
+        this.selectedTour.setToLocation(tourTo.get());
         this.selectedTour.setEstimatedTime(Duration.ofMinutes(30));
         service.updateTour(selectedTour);
         saved.set(true);
@@ -87,8 +87,8 @@ public class ManageTourViewModel {
     private void loadFromTour(Tour tour) {
         tourName.set(tour.getName());
         tourDescription.set(tour.getDescription());
-        tourFrom.set(tour.getFrom_location());
-        tourTo.set(tour.getTo_location());
+        tourFrom.set(tour.getFromLocation());
+        tourTo.set(tour.getToLocation());
         tourTransportType.set(tour.getType());
     }
 }

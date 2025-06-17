@@ -86,16 +86,16 @@ Step-by-step guide
 [x] 4. create a [TaskPlannerConfig](src/main/java/at/fhtw/bif/swen/taskplannerfx/TaskPlannerConfig.java) class
    in order to tell spring-boot where to look for its classes
 
-[-] 5. Update the [TaskPlannerApplication](src/main/java/at/fhtw/bif/swen/taskplannerfx/TaskPlannerApplication.java) class to manually create and destroy the spring boot context.
+[x] 5. Update the [TaskPlannerApplication](src/main/java/at/fhtw/bif/swen/taskplannerfx/TaskPlannerApplication.java) class to manually create and destroy the spring boot context.
 
     - attribute `springContext`
     - initialized in `init()`
     - cleaned up in `stop()`
 
-[-] 6. Update the [modules-info.java](/src/main/java/module-info.java) and add the corresponding `requires` for spring boot.
+[x] 6. Update the [modules-info.java](/src/main/java/module-info.java) and add the corresponding `requires` for spring boot.
 
    Try if ok with `mvn compile`. Resolve all warnings!
-   ====!!!==> [several errors] 
+
 
 [] 7. Add the `contextLoads` test
 
@@ -126,3 +126,9 @@ in order to use Spring Boot DAL
 7. Add missing requires, opens in module-info.java
 
     - don't forget: org.hibernate.orm.core
+
+# REST API - TO DO list
+1. save Json File
+2. connect that Json to the Leaflet
+3. save Json into DB or just reconnect to API for every call? 
+4. 

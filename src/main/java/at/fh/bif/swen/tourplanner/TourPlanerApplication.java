@@ -1,5 +1,6 @@
 package at.fh.bif.swen.tourplanner;
 
+import at.fh.bif.swen.tourplanner.config.OpenRouteConfig;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
 import at.fh.bif.swen.tourplanner.view.ManageTourController;
 import at.fh.bif.swen.tourplanner.view.TourLogController;
@@ -19,6 +20,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import java.io.IOException;
 
@@ -29,6 +31,7 @@ import java.io.IOException;
  * TODO check future usage and adapt it
  *
  */
+@EnableConfigurationProperties(OpenRouteConfig.class) // Note: to fetch the APIKEY from the application-Dev.yml file
 @SpringBootApplication
 public class TourPlanerApplication extends Application {
 
@@ -38,7 +41,8 @@ public class TourPlanerApplication extends Application {
 //FLAG: Refactorization- point 5 -->
     @Override
     public void init(){
-        springContext = new SpringApplicationBuilder(TourPlanerApplication.class).run(getParameters().getRaw().toArray(new String[0]));
+        springContext = new SpringApplicationBuilder(TourPlanerApplication.class)
+                .run(getParameters().getRaw().toArray(new String[0]));
     }
 
 
