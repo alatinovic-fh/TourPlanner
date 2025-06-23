@@ -37,7 +37,6 @@ module at.fh.bif.swen.tourplanner {
     opens at.fh.bif.swen.tourplanner.viewmodel to javafx.fxml, spring.core, spring.beans, org.hibernate.orm.core;
     opens at.fh.bif.swen.tourplanner.service to javafx.fxml, spring.core, spring.beans, org.hibernate.orm.core;
     opens at.fh.bif.swen.tourplanner.persistence.repository to javafx.fxml, spring.core, spring.beans, org.hibernate.orm.core;
-    opens at.fh.bif.swen.tourplanner.util to javafx.fxml, spring.core, spring.beans, org.hibernate.orm.core;
 
     opens at.fh.bif.swen.tourplanner.persistence.entity to spring.core, spring.beans, org.hibernate.orm.core;
     opens at.fh.bif.swen.tourplanner.config to spring.core, spring.beans, spring.context, org.hibernate.orm.core;
