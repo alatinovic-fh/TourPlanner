@@ -28,17 +28,14 @@ import java.io.IOException;
 /**
  * The Application class was adapted to the class material
  *
- * TODO check future usage and adapt it
  *
  */
-@EnableConfigurationProperties(OpenRouteConfig.class) // Note: to fetch the APIKEY from the application-Dev.yml file
+@EnableConfigurationProperties(OpenRouteConfig.class)
 @SpringBootApplication
 public class TourPlanerApplication extends Application {
 
-    //FLAG: Refactorization- point 5 --> Spring context lifecycle integration for JavaFX - Spring Boot
     private ConfigurableApplicationContext springContext;
 
-//FLAG: Refactorization- point 5 -->
     @Override
     public void init(){
         springContext = new SpringApplicationBuilder(TourPlanerApplication.class)
@@ -48,14 +45,11 @@ public class TourPlanerApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-//FLAG: Refactorization- point 5 -->
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TourPlanerView.fxml"));
-//        Parent root = loadRootNode(viewModel, manageTourViewModel, tourLogViewModel);
         Parent root = loadRootNode(springContext);
         showStage(stage, root);
     }
 
-//FLAG: Refactorization- point 5 -->
     public static Parent loadRootNode(ConfigurableApplicationContext springContext) throws IOException {
         FXMLLoader loader = new FXMLLoader(TourPlanerApplication.class.getResource("tourplaner.fxml"));
         loader.setControllerFactory(springContext::getBean);

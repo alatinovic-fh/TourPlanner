@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.time.Duration;
-import at.fh.bif.swen.tourplanner.util.IDGenerator;
+
 import org.springframework.stereotype.Component;
 
 @Component

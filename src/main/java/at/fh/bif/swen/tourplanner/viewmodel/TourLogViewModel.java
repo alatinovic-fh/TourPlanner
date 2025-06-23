@@ -3,7 +3,6 @@ package at.fh.bif.swen.tourplanner.viewmodel;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.persistence.entity.TourLog;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
-import at.fh.bif.swen.tourplanner.util.IDGenerator;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

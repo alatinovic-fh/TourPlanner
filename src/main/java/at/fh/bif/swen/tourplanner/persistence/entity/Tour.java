@@ -49,8 +49,6 @@ public class Tour {
     }
 
 
-
-
     public String details() {
 
         long hours = estimatedTime.toHours();
