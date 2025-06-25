@@ -1,6 +1,7 @@
 package at.fh.bif.swen.tourplanner.viewmodel;
 
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
+import at.fh.bif.swen.tourplanner.service.ImportExportService;
 import at.fh.bif.swen.tourplanner.service.ReportService;
 import at.fh.bif.swen.tourplanner.service.RouteService;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
@@ -26,15 +27,18 @@ public class TourPlannerViewModel {
 
     private final TourPlannerService tourPlannerService;
     private final ReportService reportService;
+    private final ImportExportService importExportService;
+
     private final ManageTourViewModel manageTourViewModel;
 
     private Tour selectedTour;
     private final ObjectProperty<Tour> selectedTourProperty = new SimpleObjectProperty<>();
 
-    public TourPlannerViewModel(TourPlannerService tourPlannerService, ManageTourViewModel manageTourViewModel, TourLogViewModel tourLogViewModel, ReportService reportService) {
+    public TourPlannerViewModel(TourPlannerService tourPlannerService, ManageTourViewModel manageTourViewModel, TourLogViewModel tourLogViewModel, ReportService reportService, ImportExportService importExportService) {
         this.reportService = reportService;
         this.tourPlannerService = tourPlannerService;
         this.manageTourViewModel = manageTourViewModel;
+        this.importExportService = importExportService;
 
         this.refreshTourList();
         this.searchQuery.addListener((obs, oldVal, newVal) -> filterTours());
@@ -116,5 +120,44 @@ public class TourPlannerViewModel {
             alert.setContentText(e.getLocalizedMessage());
             alert.showAndWait();
         }
+    }
+
+    public void exportTourData(HostServices hostServices) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Export Tour Data");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Tour-Data", "*.json"));
+            File file = fileChooser.showSaveDialog(null);
+
+            if (file != null) {
+                this.importExportService.exportTourToJson(file.getAbsolutePath(), this.selectedTour);
+                hostServices.showDocument(file.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while exporting tour-data.");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
+        }
+    }
+
+    public void importTourData(HostServices hostServices) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Import Tour Data");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Tour-Data", "*.json"));
+            File file = fileChooser.showOpenDialog(null);
+            if (file != null) {
+                this.importExportService.importTourFromJson(file.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while importing tour-data.");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
+        }
+        this.refreshTourList();
     }
 }

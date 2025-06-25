@@ -13,6 +13,8 @@
             <MenuBar minWidth="350">
                 <Menu fx:id="btnFileItem" text="File">
                     <MenuItem fx:id="newTourMenuItem" onAction="#onNewTourMenuItemClick" text="New Tour" />
+                    <MenuItem fx:id="exportTourData" onAction="#onExportTourDataClick" text="Export Tour" />
+                    <MenuItem fx:id="importTourData" onAction="#onImportTourDataClick" text="Import Tour" />
                     <MenuItem fx:id="exitMenuItem" onAction="#onExitClick" text="Exit" />
                 </Menu>
                 <Menu text="Report">
