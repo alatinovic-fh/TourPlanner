@@ -122,7 +122,7 @@ public class TourPlannerViewModel {
         }
     }
 
-    public void exportTourData(HostServices hostServices) {
+    public void exportTourData() {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Export Tour Data");
@@ -131,7 +131,6 @@ public class TourPlannerViewModel {
 
             if (file != null) {
                 this.importExportService.exportTourToJson(file.getAbsolutePath(), this.selectedTour);
-                hostServices.showDocument(file.getAbsolutePath());
             }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -142,7 +141,7 @@ public class TourPlannerViewModel {
         }
     }
 
-    public void importTourData(HostServices hostServices) {
+    public void importTourData() {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Import Tour Data");
