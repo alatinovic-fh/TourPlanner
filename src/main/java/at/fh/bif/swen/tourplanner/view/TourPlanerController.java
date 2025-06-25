@@ -112,10 +112,10 @@ public class TourPlanerController {
     }
 
     public void onExportTourDataClick(ActionEvent actionEvent) {
-        this.viewModel.exportTourData(TourPlanerApplication.HOST_SERVICES);
+        this.viewModel.exportTourData();
     }
 
     public void onImportTourDataClick(ActionEvent actionEvent) {
-        this.viewModel.importTourData(TourPlanerApplication.HOST_SERVICES);
+        this.viewModel.importTourData();
     }
 }
