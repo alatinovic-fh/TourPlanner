@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import at.fh.bif.swen.tourplanner.config.OpenRouteConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -22,6 +23,7 @@ import java.util.Locale;
 
 import java.net.URLEncoder;
 
+@Slf4j
 @Component
 public class OpenRouteClient { //Class 'OpenRouteClient' must either be declared abstract or implement abstract method 'getRoute(TransportType, GeoCoord, GeoCoord)' in 'OpenRoute'
 
@@ -38,7 +40,7 @@ public class OpenRouteClient { //Class 'OpenRouteClient' must either be declared
         try{
             location = URLEncoder.encode(location,"UTF-8");
         } catch (UnsupportedEncodingException e) {
-            System.err.println("unsupported Characters in postal adress:" + e.getMessage());
+            log.error("unsupported Characters in postal adress:");
             return null;
         }
 
@@ -61,17 +63,17 @@ public class OpenRouteClient { //Class 'OpenRouteClient' must either be declared
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    System.err.println("Failed to parse REST Response: " + e.getMessage());
+                    log.error("Failed to parse REST Response: " + e.getMessage());
                     return null;
                 }
 
             }
             else {
-                System.err.println("Failed to parse REST Response: " + response.body());
+                log.error("Failed to parse REST Response: " + response.body());
                 return null;
             }
         } catch (IOException | InterruptedException e) {
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
             return null;
         }
     }
@@ -98,12 +100,12 @@ public class OpenRouteClient { //Class 'OpenRouteClient' must either be declared
                 JsonNode route = mapper.readTree(response.body());
                 return route;
             } else {
-                System.err.println("Failed to parse REST Response: " + response.body());
+                log.error("Failed to parse REST Response: " + response.body());
                 return null;
             }
 
         } catch (IOException | InterruptedException e) {
-            System.err.println(e.getMessage());
+            log.error("Error getting Route");
             return null;
         }
     }

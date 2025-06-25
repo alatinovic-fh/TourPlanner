@@ -89,10 +89,6 @@ public class TourPlanerController {
                 this.viewModel.loadMap(newValue);
                 try {
                     File file = new File("src/main/resources/static/map.html");
-                    if (!file.exists()) {
-                        System.err.println("map.html not found in target/classes/static/");
-                        return;
-                    }
                     URL url = file.toURI().toURL();
                     mapView.getEngine().load(url.toString()+"?v=" + System.currentTimeMillis());
 

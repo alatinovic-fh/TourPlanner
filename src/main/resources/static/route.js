@@ -52,7 +52,7 @@ var directions = {
   "metadata" : {
     "attribution" : "openrouteservice.org | OpenStreetMap contributors",
     "service" : "routing",
-    "timestamp" : 1750811069565,
+    "timestamp" : 1750813018160,
     "query" : {
       "coordinates" : [ [ 16.366636, 48.229319 ], [ 16.363947, 48.23175 ] ],
       "profile" : "foot-walking",
