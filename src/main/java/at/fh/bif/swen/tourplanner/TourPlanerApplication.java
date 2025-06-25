@@ -9,6 +9,7 @@ import at.fh.bif.swen.tourplanner.viewmodel.ManageTourViewModel;
 import at.fh.bif.swen.tourplanner.viewmodel.TourLogViewModel;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,6 +36,7 @@ import java.io.IOException;
 public class TourPlanerApplication extends Application {
 
     private ConfigurableApplicationContext springContext;
+    public static HostServices HOST_SERVICES;
 
     @Override
     public void init(){
@@ -48,6 +50,8 @@ public class TourPlanerApplication extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TourPlanerView.fxml"));
         Parent root = loadRootNode(springContext);
         showStage(stage, root);
+
+        HOST_SERVICES = getHostServices();
     }
 
     public static Parent loadRootNode(ConfigurableApplicationContext springContext) throws IOException {

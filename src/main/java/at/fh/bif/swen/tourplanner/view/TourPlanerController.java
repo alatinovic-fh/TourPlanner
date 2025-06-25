@@ -1,9 +1,9 @@
 package at.fh.bif.swen.tourplanner.view;
 
+import at.fh.bif.swen.tourplanner.TourPlanerApplication;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.beans.binding.Bindings;
-import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,11 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import java.io.File;
@@ -105,4 +103,11 @@ public class TourPlanerController {
 
     }
 
+    public void onCreateTourReportClick(ActionEvent actionEvent) {
+        this.viewModel.createTourReport(TourPlanerApplication.HOST_SERVICES, false);
+    }
+
+    public void onCreateSummaryClick(ActionEvent actionEvent){
+        this.viewModel.createTourReport(TourPlanerApplication.HOST_SERVICES, true);
+    }
 }
