@@ -25,7 +25,7 @@ import java.net.URLEncoder;
 
 @Slf4j
 @Component
-public class OpenRouteClient { //Class 'OpenRouteClient' must either be declared abstract or implement abstract method 'getRoute(TransportType, GeoCoord, GeoCoord)' in 'OpenRoute'
+public class OpenRouteClient {
 
     private final OpenRouteConfig config;
     private final RestTemplate restTemplate;
