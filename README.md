@@ -8,7 +8,7 @@ zu bearbeiten, zu löschen und mit detaillierten TourLogs zu versehen.
 ```
 Java-Version: 21
 JavaFX-web maybe has to be added manually 
-    -InteliJ Maven-Dependencies-(right click javafx-web)-Download sources
+    -IntelliJ Maven-Dependencies-(right click javafx-web)-Download sources
 ```
 
 ## UX Documentation
