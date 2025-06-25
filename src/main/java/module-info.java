@@ -23,6 +23,9 @@ module at.fh.bif.swen.tourplanner {
     requires com.fasterxml.jackson.databind;
     requires jakarta.annotation;
     requires org.slf4j;
+    requires layout;
+    requires kernel;
+    requires io;
 
     exports at.fh.bif.swen.tourplanner;
     exports at.fh.bif.swen.tourplanner.view;

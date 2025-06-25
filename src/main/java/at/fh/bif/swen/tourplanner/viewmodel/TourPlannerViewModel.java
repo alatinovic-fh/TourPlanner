@@ -1,12 +1,20 @@
 package at.fh.bif.swen.tourplanner.viewmodel;
 
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
+import at.fh.bif.swen.tourplanner.service.ReportService;
+import at.fh.bif.swen.tourplanner.service.RouteService;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
+import javafx.application.HostServices;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.stage.FileChooser;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.io.IOException;
 
 @Component
 public class TourPlannerViewModel {
@@ -17,12 +25,14 @@ public class TourPlannerViewModel {
     private final StringProperty tourDetails = new SimpleStringProperty("");
 
     private final TourPlannerService tourPlannerService;
+    private final ReportService reportService;
     private final ManageTourViewModel manageTourViewModel;
 
     private Tour selectedTour;
     private final ObjectProperty<Tour> selectedTourProperty = new SimpleObjectProperty<>();
 
-    public TourPlannerViewModel(TourPlannerService tourPlannerService, ManageTourViewModel manageTourViewModel, TourLogViewModel tourLogViewModel) {
+    public TourPlannerViewModel(TourPlannerService tourPlannerService, ManageTourViewModel manageTourViewModel, TourLogViewModel tourLogViewModel, ReportService reportService) {
+        this.reportService = reportService;
         this.tourPlannerService = tourPlannerService;
         this.manageTourViewModel = manageTourViewModel;
 
@@ -84,4 +94,27 @@ public class TourPlannerViewModel {
         this.tourPlannerService.loadMap(tour);
     }
 
+    public void createTourReport(HostServices hostServices, boolean isSummary) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save PDF Report");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Report", "*.pdf"));
+            File file = fileChooser.showSaveDialog(null);
+
+            if (file != null) {
+                if(isSummary) {
+                    this.reportService.generateSummaryReport(file.getAbsolutePath());
+                } else {
+                    this.reportService.generateTourReport(file.getAbsolutePath(), this.selectedTour);
+                }
+                hostServices.showDocument(file.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while generating report.");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
+        }
+    }
 }
