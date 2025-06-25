@@ -1,5 +1,6 @@
 package at.fh.bif.swen.tourplanner.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -42,6 +43,7 @@ public class TourLog {
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "tour_id", nullable = false)
+    @JsonIgnore
     private Tour tour;
 
     public TourLog(LocalDate date, String comment, String difficulty, double totalDistance, Duration totalTimeLong, double rating){

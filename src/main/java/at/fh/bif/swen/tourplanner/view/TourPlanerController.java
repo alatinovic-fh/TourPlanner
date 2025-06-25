@@ -110,4 +110,12 @@ public class TourPlanerController {
     public void onCreateSummaryClick(ActionEvent actionEvent){
         this.viewModel.createTourReport(TourPlanerApplication.HOST_SERVICES, true);
     }
+
+    public void onExportTourDataClick(ActionEvent actionEvent) {
+        this.viewModel.exportTourData(TourPlanerApplication.HOST_SERVICES);
+    }
+
+    public void onImportTourDataClick(ActionEvent actionEvent) {
+        this.viewModel.importTourData(TourPlanerApplication.HOST_SERVICES);
+    }
 }
