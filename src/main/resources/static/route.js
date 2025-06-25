@@ -1,16 +1,16 @@
 var directions = {
   "type" : "FeatureCollection",
-  "bbox" : [ 16.364128, 48.229404, 16.366863, 48.231783 ],
+  "bbox" : [ 16.364128, 48.22999, 16.366292, 48.231783 ],
   "features" : [ {
-    "bbox" : [ 16.364128, 48.229404, 16.366863, 48.231783 ],
+    "bbox" : [ 16.364128, 48.22999, 16.366292, 48.231783 ],
     "type" : "Feature",
     "properties" : {
       "segments" : [ {
-        "distance" : 391.8,
-        "duration" : 282.1,
+        "distance" : 305.3,
+        "duration" : 219.8,
         "steps" : [ {
-          "distance" : 105.6,
-          "duration" : 76.1,
+          "distance" : 19.2,
+          "duration" : 13.9,
           "type" : 11,
           "instruction" : "Head northwest on Denisgasse",
           "name" : "Denisgasse",
@@ -40,21 +40,21 @@ var directions = {
       } ],
       "way_points" : [ 0, 9 ],
       "summary" : {
-        "distance" : 391.8,
-        "duration" : 282.1
+        "distance" : 305.3,
+        "duration" : 219.8
       }
     },
     "geometry" : {
-      "coordinates" : [ [ 16.366863, 48.229404 ], [ 16.366165, 48.230232 ], [ 16.365365, 48.22999 ], [ 16.365236, 48.230148 ], [ 16.365005, 48.230432 ], [ 16.364415, 48.231112 ], [ 16.364369, 48.231168 ], [ 16.364211, 48.231573 ], [ 16.364134, 48.231768 ], [ 16.364128, 48.231783 ] ],
+      "coordinates" : [ [ 16.366292, 48.230082 ], [ 16.366165, 48.230232 ], [ 16.365365, 48.22999 ], [ 16.365236, 48.230148 ], [ 16.365005, 48.230432 ], [ 16.364415, 48.231112 ], [ 16.364369, 48.231168 ], [ 16.364211, 48.231573 ], [ 16.364134, 48.231768 ], [ 16.364128, 48.231783 ] ],
       "type" : "LineString"
     }
   } ],
   "metadata" : {
     "attribution" : "openrouteservice.org | OpenStreetMap contributors",
     "service" : "routing",
-    "timestamp" : 1750811069565,
+    "timestamp" : 1750814879404,
     "query" : {
-      "coordinates" : [ [ 16.366636, 48.229319 ], [ 16.363947, 48.23175 ] ],
+      "coordinates" : [ [ 16.366121, 48.230018 ], [ 16.363947, 48.23175 ] ],
       "profile" : "foot-walking",
       "profileName" : "foot-walking",
       "format" : "json"

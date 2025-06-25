@@ -1,9 +1,11 @@
 package at.fh.bif.swen.tourplanner.config;
 
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @ConfigurationProperties(prefix = "openroute")
 public class OpenRouteConfig {
@@ -20,6 +22,6 @@ public class OpenRouteConfig {
 
     @PostConstruct
     public void debug() {
-        System.out.println("[CONFIG] API Key laoded: "+apiKey);
+        log.debug("[CONFIG] API Key laoded: "+apiKey);
     }
 }

@@ -5,11 +5,13 @@ import at.fh.bif.swen.tourplanner.integration.GeoCoord;
 import at.fh.bif.swen.tourplanner.integration.OpenRouteClient;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 
+@Slf4j
 @Service
 public class RouteService {
 
@@ -27,8 +29,7 @@ public class RouteService {
             tour.setDistance(this.getDistance(routeJSON));
             tour.setEstimatedTime(this.getDuration(routeJSON));
         }catch (Exception e){
-            System.err.println("Error calculating route info");
-            e.printStackTrace();
+            log.error("Error calculating route info");
         }
     }
 
@@ -40,7 +41,7 @@ public class RouteService {
         this.startCoord = openRouteClient.geoCoord(tour.getFromLocation());
         this.endCoord = openRouteClient.geoCoord(tour.getToLocation());
         if (startCoord == null || endCoord == null) {
-            System.err.println("ERROR: Failed to find address");
+            log.error("ERROR: Failed to find address");
         }
     }
 
@@ -51,7 +52,7 @@ public class RouteService {
             return routeJSON;
 
         }catch(Exception e){
-            System.err.println("ERROR: while finding route" + e.getMessage());
+            log.error("ERROR: while finding route");
             e.printStackTrace();
             return null;
         }

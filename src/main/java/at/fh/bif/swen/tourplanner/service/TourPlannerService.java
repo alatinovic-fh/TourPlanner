@@ -10,10 +10,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import at.fh.bif.swen.tourplanner.integration.OpenRouteClient;
 
+@Slf4j
 @Data
 @Service
 public class TourPlannerService {
@@ -51,7 +53,7 @@ public class TourPlannerService {
 
     public void updateTour(Tour updatedTour) {
         if (updatedTour == null) {
-            System.err.println("updateTour: updatedTour ist null!");
+            log.warn("updateTour: updatedTour ist null!");
             return;
         }
         this.routeService.calculateRouteInfo(updatedTour);
