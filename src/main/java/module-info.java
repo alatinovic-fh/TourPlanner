@@ -22,7 +22,7 @@ module at.fh.bif.swen.tourplanner {
     requires spring.web;
     requires com.fasterxml.jackson.databind;
     requires jakarta.annotation;
-
+    requires org.slf4j;
 
     exports at.fh.bif.swen.tourplanner;
     exports at.fh.bif.swen.tourplanner.view;
