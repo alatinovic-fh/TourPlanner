@@ -23,6 +23,7 @@ public class TourLogController {
     @FXML private TextField difficultyField;
     @FXML private TextField distanceField;
     @FXML private TextField durationField;
+    @FXML private TextField ratingField;
 
     @FXML private TableColumn<TourLog, String> dateColumn;
     @FXML private TableColumn<TourLog, String> commentColumn;
@@ -45,6 +46,7 @@ public class TourLogController {
         difficultyField.textProperty().bindBidirectional(tourLogViewModel.difficultyProperty());
         distanceField.textProperty().bindBidirectional(tourLogViewModel.totalDistanceProperty());
         durationField.textProperty().bindBidirectional(tourLogViewModel.totalTimeProperty());
+        ratingField.textProperty().bindBidirectional(tourLogViewModel.ratingProperty());
         tourLogViewModel.bindToSelectedTourProperty(viewModel.selectedTourProperty());
 
         dateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDate().toString()));
