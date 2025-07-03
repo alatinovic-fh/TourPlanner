@@ -49,7 +49,7 @@ public class TourLogController {
 
         dateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDate().toString()));
         commentColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getComment()));
-        difficultyColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDifficulty()));
+        difficultyColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDifficulty()+""));
         distanceColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getTotalDistance())));
         durationColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDuration(data.getValue().getTotalTime())));
         ratingColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getRating())));

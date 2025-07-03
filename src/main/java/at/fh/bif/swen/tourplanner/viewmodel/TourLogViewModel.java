@@ -36,25 +36,30 @@ public class TourLogViewModel {
 
     public void addTourLog() {
         double totalDistanceDouble = 0;
+        int difficultyInteger = 0;
         long totalTimeLong = 0;
         try{
             totalDistanceDouble = Double.parseDouble(totalDistance.get());
             totalTimeLong = Long.parseLong(totalTime.get());
+            difficultyInteger = Integer.parseInt(difficulty.get());
         }catch (NumberFormatException e){
             e.printStackTrace();
         }
-        TourLog newTourLog = new TourLog(LocalDate.now(),comment.get(), difficulty.get(), totalDistanceDouble, Duration.ofMinutes(totalTimeLong), 1);
+        TourLog newTourLog = new TourLog(LocalDate.now(),comment.get(), difficultyInteger, totalDistanceDouble, Duration.ofMinutes(totalTimeLong), 1);
         allTourLogs.add(newTourLog);
         service.addTourLog(newTourLog, this.selectedTour);
+        service.calculateAttributes(this.selectedTour);
         this.addedLog.set(true);
     }
 
     public void saveChanges() {
         double totalDistanceDouble = 0;
         long totalTimeLong = 0;
+        int difficultyInteger = 0;
         try{
             totalDistanceDouble = Double.parseDouble(totalDistance.get());
             totalTimeLong = Long.parseLong(totalTime.get());
+            difficultyInteger = Integer.parseInt(difficulty.get());
         }catch (NumberFormatException e){
             e.printStackTrace();
         }
@@ -62,11 +67,12 @@ public class TourLogViewModel {
         this.selectedTourLog.setTour(selectedTour);
         this.selectedTourLog.setDate(selectedTourLog.getDate());
         this.selectedTourLog.setComment(comment.get());
-        this.selectedTourLog.setDifficulty(difficulty.get());
+        this.selectedTourLog.setDifficulty(difficultyInteger);
         this.selectedTourLog.setTotalDistance(totalDistanceDouble);
         this.selectedTourLog.setTotalTime(Duration.ofMinutes(totalTimeLong));
         this.selectedTourLog.setRating(selectedTourLog.getRating());
 
+        service.calculateAttributes(selectedTour);
         service.updateTourLog(this.selectedTourLog);
         savedLog.set(true);
     }
@@ -76,6 +82,7 @@ public class TourLogViewModel {
             service.deleteTourLog(this.selectedTourLog, this.selectedTour);
             deletedLog.set(true);
             selectedTourLog = null;
+            service.calculateAttributes(this.selectedTour);
         }
     }
 
@@ -130,7 +137,7 @@ public class TourLogViewModel {
     public void setSelectedTourLog(TourLog selectedTourLog) {
 
         comment.set(selectedTourLog.getComment());
-        difficulty.set(selectedTourLog.getDifficulty());
+        difficulty.set(selectedTourLog.getDifficulty()+"");
         totalDistance.set(String.valueOf(selectedTourLog.getTotalDistance()));
 
         //Parse Duration to String format

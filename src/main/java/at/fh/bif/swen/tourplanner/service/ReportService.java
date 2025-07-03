@@ -84,7 +84,7 @@ public class ReportService {
         for (TourLog log : this.logRepository.findByTour(tour)) {
             table.addCell(log.getDate().format(dateFormatter));
             table.addCell(log.getComment());
-            table.addCell(log.getDifficulty());
+            table.addCell(log.getDifficulty()+"");
             table.addCell(String.format("%.2f", log.getTotalDistance()));
             table.addCell(formatDuration(log.getTotalTime()));
             table.addCell(String.valueOf(log.getRating()));

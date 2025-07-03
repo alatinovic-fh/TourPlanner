@@ -36,7 +36,11 @@ public class Tour {
     @Column(name = "estimatedTime")
     private Duration estimatedTime;
 
+    @Column(name = "popularity")
+    private double popularity;
 
+    @Column(name = "childFriendliness")
+    private double childFriendliness;
 
     public Tour(String name, String description, String fromLocation, String toLocation, TransportType type, double distance, Duration estimatedTime) {
         this.name = name;
@@ -60,8 +64,10 @@ public class Tour {
                         From: %s
                         To: %s
                         Transport type: %s
-                        Distance: %.2f km
+                        Estimated Distance: %.2f km
                         Estimated time: %dh %02dm
+                        Popularity: %.2f
+                        ChildFriendliness: %.2f
                         """,
                 name,
                 description,
@@ -70,7 +76,9 @@ public class Tour {
                 type,
                 distance,
                 hours,
-                minutes
+                minutes,
+                popularity,
+                childFriendliness
         );
 
     }
