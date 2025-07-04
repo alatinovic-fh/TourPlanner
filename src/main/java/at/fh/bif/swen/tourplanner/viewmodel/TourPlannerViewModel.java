@@ -12,10 +12,12 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -103,7 +105,7 @@ public class TourPlannerViewModel {
         }
     }
 
-    public void createTourReport(HostServices hostServices, boolean isSummary) {
+    public void createTourReport(HostServices hostServices, boolean isSummary, BufferedImage tourimage) {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save PDF Report");
@@ -114,7 +116,7 @@ public class TourPlannerViewModel {
                 if(isSummary) {
                     this.reportService.generateSummaryReport(file.getAbsolutePath());
                 } else {
-                    this.reportService.generateTourReport(file.getAbsolutePath(), this.selectedTour);
+                    this.reportService.generateTourReport(file.getAbsolutePath(), this.selectedTour, tourimage);
                 }
                 hostServices.showDocument(file.getAbsolutePath());
             }

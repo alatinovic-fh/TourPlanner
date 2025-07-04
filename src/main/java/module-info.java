@@ -26,6 +26,7 @@ module at.fh.bif.swen.tourplanner {
     requires io;
     requires com.fasterxml.jackson.datatype.jsr310;
     requires com.fasterxml.jackson.databind;
+    requires javafx.swing;
 
     exports at.fh.bif.swen.tourplanner;
     exports at.fh.bif.swen.tourplanner.view;

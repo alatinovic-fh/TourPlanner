@@ -4,6 +4,7 @@ import at.fh.bif.swen.tourplanner.TourPlanerApplication;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
 import javafx.beans.binding.Bindings;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -104,11 +106,12 @@ public class TourPlanerController {
     }
 
     public void onCreateTourReportClick(ActionEvent actionEvent) {
-        this.viewModel.createTourReport(TourPlanerApplication.HOST_SERVICES, false);
+        BufferedImage tourimage = SwingFXUtils.fromFXImage(this.mapView.snapshot(null, null), null);
+        this.viewModel.createTourReport(TourPlanerApplication.HOST_SERVICES, false, tourimage);
     }
 
     public void onCreateSummaryClick(ActionEvent actionEvent){
-        this.viewModel.createTourReport(TourPlanerApplication.HOST_SERVICES, true);
+        this.viewModel.createTourReport(TourPlanerApplication.HOST_SERVICES, true, null);
     }
 
     public void onExportTourDataClick(ActionEvent actionEvent) {

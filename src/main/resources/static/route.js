@@ -241,7 +241,7 @@ var directions = {
   "metadata" : {
     "attribution" : "openrouteservice.org | OpenStreetMap contributors",
     "service" : "routing",
-    "timestamp" : 1751669013684,
+    "timestamp" : 1751671206359,
     "query" : {
       "coordinates" : [ [ 16.384688, 48.216579 ], [ 16.36527, 48.231698 ] ],
       "profile" : "foot-hiking",
