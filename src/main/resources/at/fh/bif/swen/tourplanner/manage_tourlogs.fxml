@@ -8,11 +8,7 @@
     <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
     </padding>
-    <ToolBar>
-        <Button onAction="#onAddLog" text="Add Log" />
-        <Button onAction="#onDeleteLog" text="Delete Log" />
-        <Button onAction="#onSaveChanges" text="Save Changes" />
-    </ToolBar>
+
     <TableView fx:id="tourLogTable" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="dateColumn" text="Date" />
@@ -55,4 +51,9 @@
             <TextField fx:id="durationField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         </GridPane>
     </TitledPane>
+    <ToolBar>
+    <Button fx:id="btnAdd_mngTourLogs"  onAction="#onAddLog" text="Add Log" />
+    <Button fx:id="btnSave_mngTourLogs"  onAction="#onSaveChanges" text="Save Changes" />
+    <Button fx:id="btnDelete_mngTourLogs"  onAction="#onDeleteLog" text="Delete Log" />
+</ToolBar>
 </VBox>

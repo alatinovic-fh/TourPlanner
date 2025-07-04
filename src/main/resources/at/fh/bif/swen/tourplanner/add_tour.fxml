@@ -28,16 +28,5 @@
         <Button fx:id="btnCancelTour" onAction="#onCancel" text="Cancel" />
         <Button fx:id="btnAddTour" onAction="#onSave" text="Add Tour" />
     </HBox>
-   <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
+
 </GridPane>

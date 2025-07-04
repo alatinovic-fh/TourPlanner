@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
 
-<BorderPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.TourPlanerController">
+<BorderPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.TourPlanerController">
 
     <top>
         <VBox>
@@ -17,9 +17,9 @@
                     <MenuItem fx:id="importTourData" onAction="#onImportTourDataClick" text="Import Tour" />
                     <MenuItem fx:id="exitMenuItem" onAction="#onExitClick" text="Exit" />
                 </Menu>
-                <Menu text="Report">
-                    <MenuItem fx:id="createTourReport" onAction="#onCreateTourReportClick" text="Create Tour Report"/>
-                    <MenuItem fx:id="createSummaryReport" onAction="#onCreateSummaryClick" text="Create Summary Report"/>
+                <Menu fx:id="btnReport" text="Report">
+                    <MenuItem fx:id="createTourReport" onAction="#onCreateTourReportClick" text="Create Tour Report" />
+                    <MenuItem fx:id="createSummaryReport" onAction="#onCreateSummaryClick" text="Create Summary Report" />
                 </Menu>
                 <Menu text="Options" />
                 <Menu text="Help" />
@@ -35,18 +35,20 @@
                     <VBox fx:id="mapContainer" VBox.vgrow="ALWAYS">
                   <WebView fx:id="mapView" prefHeight="324.0" prefWidth="832.0" VBox.vgrow="ALWAYS" />
                   <Label fx:id="tourDataLabel" alignment="TOP_LEFT" prefHeight="325.0" prefWidth="833.0" VBox.vgrow="ALWAYS">
-
                      <font>
                         <Font size="25.0" />
                      </font></Label>
                     </VBox>
                 </Tab>
-                <Tab text="Tour Logs">
+
+                <Tab fx:id="ManageTourLogTab" text="Tour Logs">
                     <fx:include source="manage_tourlogs.fxml" />
                 </Tab>
-                <Tab text="Manage Tour">
+
+                <Tab fx:id="ManageTourTab" text="Manage Tour">
                     <fx:include source="manage_tour.fxml" />
                 </Tab>
+
             </tabs>
         </TabPane>
     </center>

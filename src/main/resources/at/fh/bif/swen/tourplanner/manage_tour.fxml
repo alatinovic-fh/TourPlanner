@@ -21,7 +21,7 @@
     <ComboBox fx:id="transportCombo" />
 
     <HBox spacing="10">
-        <Button onAction="#onSaveTour" text="Save" />
-        <Button onAction="#onDeleteTour" text="Delete Tour" textFill="RED" />
+        <Button fx:id="btnSave_mngTour"  onAction="#onSaveTour" text="Save" />
+        <Button fx:id="btndel_mngTour" onAction="#onDeleteTour" text="Delete Tour" textFill="RED" />
     </HBox>
 </VBox>
