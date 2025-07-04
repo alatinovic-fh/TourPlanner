@@ -3,6 +3,7 @@ package at.fh.bif.swen.tourplanner.service;
 import at.fh.bif.swen.tourplanner.integration.DirectionalJSConverter;
 import at.fh.bif.swen.tourplanner.integration.GeoCoord;
 import at.fh.bif.swen.tourplanner.integration.OpenRouteClient;
+import at.fh.bif.swen.tourplanner.integration.exception.InvalidAddressException;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
@@ -22,22 +23,18 @@ public class RouteService {
     private GeoCoord endCoord;
 
 
-    public void calculateRouteInfo(Tour tour) {
-        try{
-            this.updateCoords(tour);
-            JsonNode routeJSON = this.getRouteJSON(tour);
-            tour.setDistance(this.getDistance(routeJSON));
-            tour.setEstimatedTime(this.getDuration(routeJSON));
-        }catch (Exception e){
-            log.error("Error calculating route info");
-        }
+    public void calculateRouteInfo(Tour tour) throws InvalidAddressException {
+        this.updateCoords(tour);
+        JsonNode routeJSON = this.getRouteJSON(tour);
+        tour.setDistance(this.getDistance(routeJSON));
+        tour.setEstimatedTime(this.getDuration(routeJSON));
     }
 
-    public void updateRoute(Tour tour){
+    public void updateRoute(Tour tour) throws InvalidAddressException {
         DirectionalJSConverter.exportJS(this.getRouteJSON(tour));
     }
 
-    private void updateCoords(Tour tour) {
+    private void updateCoords(Tour tour) throws InvalidAddressException {
         this.startCoord = openRouteClient.geoCoord(tour.getFromLocation());
         this.endCoord = openRouteClient.geoCoord(tour.getToLocation());
         if (startCoord == null || endCoord == null) {
@@ -45,17 +42,10 @@ public class RouteService {
         }
     }
 
-    private JsonNode getRouteJSON (Tour tour) {
-        try{
-            this.updateCoords(tour);
-            JsonNode routeJSON = openRouteClient.getRoute(tour.getType(),this.startCoord,this.endCoord);
-            return routeJSON;
-
-        }catch(Exception e){
-            log.error("ERROR: while finding route");
-            e.printStackTrace();
-            return null;
-        }
+    private JsonNode getRouteJSON (Tour tour) throws InvalidAddressException {
+        this.updateCoords(tour);
+        JsonNode routeJSON = openRouteClient.getRoute(tour.getType(),this.startCoord,this.endCoord);
+        return routeJSON;
     }
 
     private Duration getDuration(JsonNode route) {

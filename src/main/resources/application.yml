@@ -1,5 +1,5 @@
 openroute:
-  api-key: "5b3ce3597851110001cf6248ec5af7de2cca457a89d08c5198bdd435"
+  api-key: "5b3ce3597851110001cf6248850942b00dac413b812f24a0a49af5e9"
 logging:
   level:
     org.springframework.boot.context.properties.bind: DEBUG

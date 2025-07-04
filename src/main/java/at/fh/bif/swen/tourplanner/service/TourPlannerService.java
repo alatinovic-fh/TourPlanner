@@ -1,12 +1,15 @@
 package at.fh.bif.swen.tourplanner.service;
 
+import at.fh.bif.swen.tourplanner.integration.exception.InvalidAddressException;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.persistence.entity.TourLog;
 import at.fh.bif.swen.tourplanner.persistence.repository.TourLogRepository;
 import at.fh.bif.swen.tourplanner.persistence.repository.TourRepository;
+import at.fh.bif.swen.tourplanner.service.exception.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Data;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,28 +42,31 @@ public class TourPlannerService {
         return tourList.filtered(t -> t.getName().toLowerCase().contains(query.toLowerCase()));
     }
 
-    public void addTour(Tour tour) {
+    public void addTour(Tour tour) throws TourIncompleteException, InvalidAddressException {
+        if(checkEmptyTour(tour)) throw new TourIncompleteException("Please enter all the required data");
         this.routeService.calculateRouteInfo(tour);
         this.routeService.updateRoute(tour);
         this.tourRepository.save(tour);
     }
 
-    public void loadMap(Tour tour) {
+    public void loadMap(Tour tour) throws InvalidAddressException {
         this.routeService.updateRoute(tour);
     }
 
-    public void updateTour(Tour updatedTour) {
+    public void updateTour(Tour updatedTour) throws TourIncompleteException, InvalidAddressException {
         if (updatedTour == null) {
             log.warn("updateTour: updatedTour ist null!");
             return;
         }
+        if(checkEmptyTour(updatedTour)) throw new TourIncompleteException("Please enter all the required data");
         this.routeService.calculateRouteInfo(updatedTour);
         this.routeService.updateRoute(updatedTour);
         this.tourRepository.save(updatedTour);
     }
 
-    public void deleteTour(Tour tour) {
+    public void deleteTour(Tour tour) throws TourLogsNotEmptyException {
         if (tour != null) {
+            if (!this.tourLogRepository.findByTour(tour).isEmpty()) throw new TourLogsNotEmptyException("Please delete all tourlogs before you delete the tour");
             this.tourRepository.delete(tour);
         }
     }
@@ -72,15 +78,24 @@ public class TourPlannerService {
         return null;
     }
 
-    public void addTourLog(TourLog tourLog, Tour selectedTour) {
+    public void addTourLog(TourLog tourLog, Tour selectedTour) throws TourNotSelectedException, TourLogCommentMissingException, InvalidRatingOrDifficultyException, InvalidTimeOrDistanceExcpetion {
+        if(selectedTour == null) throw new TourNotSelectedException("Before adding a tourlog please select a tour");
         if (tourLog != null) {
+            if (this.checkTourLogComment(tourLog)) throw new TourLogCommentMissingException("Please enter a tourlog comment");
+            if (this.checkValidRatingDifficulty(tourLog)) throw new InvalidRatingOrDifficultyException("The values for rating and difficulty should be in between 1-5 (whole numbers)");
+            if (this.checkValidTimeDistance(tourLog)) throw new InvalidTimeOrDistanceExcpetion("The time or distance cannot be lower than 0");
             tourLog.setTour(selectedTour);
             this.tourLogRepository.save(tourLog);
         }
     }
 
-    public void updateTourLog(TourLog newTourLog) {
+    public void updateTourLog(TourLog newTourLog, Tour tour) throws TourLogCommentMissingException, InvalidRatingOrDifficultyException, InvalidTimeOrDistanceExcpetion, TourNotSelectedException {
+        if (tour == null) throw new TourNotSelectedException("Before adding a tourlog please select a tour");
         if (newTourLog != null) {
+            newTourLog.setTour(tour);
+            if (this.checkTourLogComment(newTourLog)) throw new TourLogCommentMissingException("Please enter a tourlog comment");
+            if (this.checkValidRatingDifficulty(newTourLog)) throw new InvalidRatingOrDifficultyException("The values for rating and difficulty should be in between 1-5 (whole numbers)");
+            if (this.checkValidTimeDistance(newTourLog)) throw new InvalidTimeOrDistanceExcpetion("The time or distance cannot be lower than 0");
             this.tourLogRepository.save(newTourLog);
         }
     }
@@ -91,6 +106,13 @@ public class TourPlannerService {
         }
     }
 
+    /**
+     * This method calculates the popularity and child friendliness
+     * I put this comment here because it is a "complex" task that calculates the average dif, dist, and time,
+     * according to that the childfriendliness is then calculated, this is how I took it from the specification
+     * @param tour
+     */
+    @SneakyThrows //try catch not needed because in this case tour cannot be incomplete
     public void calculateAttributes(Tour tour) {
         List<TourLog> tourLogs = this.tourLogRepository.findByTour(tour);
 
@@ -180,5 +202,33 @@ public class TourPlannerService {
 
         tour.setChildFriendliness(childFriendliness);
         this.updateTour(tour);
+    }
+
+    private boolean checkEmptyTour(Tour tour) {
+        if (tour.getDescription() == null || tour.getDescription().isEmpty()) {
+            return true;
+        } else if (tour.getName() == null || tour.getName().isEmpty()) {
+            return true;
+        } else if (tour.getFromLocation() == null || tour.getFromLocation().isEmpty()) {
+            return true;
+        } else if (tour.getToLocation() == null || tour.getToLocation().isEmpty()) {
+            return true;
+        } else if (tour.getType() == null){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkTourLogComment(TourLog tourLog){
+        return tourLog.getComment() == null || tourLog.getComment().isEmpty();
+    }
+
+    private boolean checkValidRatingDifficulty(TourLog tourlog) {
+        if (tourlog.getRating() <= 0 || tourlog.getRating() > 5) return true;
+        return tourlog.getDifficulty() <= 0 || tourlog.getDifficulty() > 5;
+    }
+
+    private boolean checkValidTimeDistance(TourLog tourlog) {
+        return tourlog.getTotalDistance() < 0 || tourlog.getTotalTime().toHours() < 0;
     }
 }
