@@ -96,7 +96,6 @@ public class TourLogViewModel {
             this.selectedTourLog.setTotalDistance(totalDistanceDouble);
             this.selectedTourLog.setTotalTime(Duration.ofMinutes(totalTimeLong));
             this.selectedTourLog.setRating(ratingInteger);
-
             service.updateTourLog(this.selectedTourLog, selectedTour);
             service.calculateAttributes(selectedTour);
             savedLog.set(true);

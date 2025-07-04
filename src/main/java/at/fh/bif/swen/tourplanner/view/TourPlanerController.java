@@ -121,4 +121,8 @@ public class TourPlanerController {
     public void onImportTourDataClick(ActionEvent actionEvent) {
         this.viewModel.importTourData();
     }
+
+    public void onRefreshClick(ActionEvent actionEvent) {
+        this.viewModel.refreshTourList();
+    }
 }

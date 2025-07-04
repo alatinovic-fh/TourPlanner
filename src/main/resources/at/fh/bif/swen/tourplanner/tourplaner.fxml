@@ -18,8 +18,8 @@
                     <MenuItem fx:id="exitMenuItem" onAction="#onExitClick" text="Exit" />
                 </Menu>
                 <Menu text="Report">
-                    <MenuItem fx:id="createTourReport" onAction="#onCreateTourReportClick" text="Create Tour Report"/>
-                    <MenuItem fx:id="createSummaryReport" onAction="#onCreateSummaryClick" text="Create Summary Report"/>
+                    <MenuItem fx:id="createTourReport" onAction="#onCreateTourReportClick" text="Create Tour Report" />
+                    <MenuItem fx:id="createSummaryReport" onAction="#onCreateSummaryClick" text="Create Summary Report" />
                 </Menu>
                 <Menu text="Options" />
                 <Menu text="Help" />
@@ -53,6 +53,7 @@
 
     <left>
         <VBox>
+         <Button fx:id="refreshTourList" mnemonicParsing="false" onAction="#onRefreshClick" text="Refresh Tourlist"/>
             <TextField fx:id="searchField" promptText="Search">
                 <padding>
                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
