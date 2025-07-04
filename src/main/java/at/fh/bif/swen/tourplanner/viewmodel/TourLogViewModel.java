@@ -11,6 +11,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -19,6 +20,10 @@ import java.time.LocalDate;
 @Component
 public class TourLogViewModel {
     private final TourPlannerService service;
+
+    @Getter
+    private final ObservableList<TourLog> filteredTourLogs = FXCollections.observableArrayList();
+    private final StringProperty searchQuery = new SimpleStringProperty("");
 
     ObservableList<TourLog> allTourLogs = FXCollections.observableArrayList();
 
@@ -37,7 +42,12 @@ public class TourLogViewModel {
 
     public TourLogViewModel(TourPlannerService service) {
         this.service = service;
+        this.searchQuery.addListener((obs, oldVal, newVal) -> filterTourLogs());
 
+    }
+
+    public void filterTourLogs() {
+        filteredTourLogs.setAll(service.filterTourLogs(allTourLogs, searchQuery.get()));
     }
 
     public void addTourLog() {
@@ -53,6 +63,7 @@ public class TourLogViewModel {
             TourLog newTourLog = new TourLog(LocalDate.now(),comment.get(), difficultyInteger, totalDistanceDouble, Duration.ofMinutes(totalTimeLong), ratingInteger);
             service.addTourLog(newTourLog, this.selectedTour);
             allTourLogs.add(newTourLog);
+            filterTourLogs();
             service.calculateAttributes(this.selectedTour);
             this.addedLog.set(true);
         }catch (NumberFormatException e){
@@ -129,7 +140,8 @@ public class TourLogViewModel {
         if (this.service.loadTourLogs(this.selectedTour) != null) {
             this.allTourLogs.setAll(this.service.loadTourLogs(this.selectedTour));
         }
-        return this.allTourLogs;
+        filterTourLogs();
+        return this.filteredTourLogs;
     }
 
     public void bindToSelectedTourProperty(ReadOnlyObjectProperty<Tour> selectedTourProperty) {
@@ -174,6 +186,9 @@ public class TourLogViewModel {
     }
     public StringProperty ratingProperty(){
         return rating;
+    }
+    public StringProperty searchQueryProperty(){
+        return searchQuery;
     }
 
     public void setSelectedTourLog(TourLog selectedTourLog) {

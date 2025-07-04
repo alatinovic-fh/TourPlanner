@@ -42,6 +42,10 @@ public class TourPlannerService {
         return tourList.filtered(t -> t.getName().toLowerCase().contains(query.toLowerCase()));
     }
 
+    public ObservableList<TourLog> filterTourLogs(ObservableList<TourLog> tourLogList, String query) {
+        return tourLogList.filtered(t-> t.getComment().toLowerCase().contains(query.toLowerCase()));
+    }
+
     public void addTour(Tour tour) throws TourIncompleteException, InvalidAddressException {
         if(checkEmptyTour(tour)) throw new TourIncompleteException("Please enter all the required data");
         this.routeService.calculateRouteInfo(tour);

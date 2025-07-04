@@ -46,6 +46,7 @@
             <TextField fx:id="ratingField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         </GridPane>
     </TitledPane>
+   <TextField fx:id="searchTourLogField" promptText="Search" />
     <TableView fx:id="tourLogTable" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="dateColumn" text="Date" />
