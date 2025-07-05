@@ -12,12 +12,16 @@ zu bearbeiten, zu löschen und mit detaillierten TourLogs zu versehen.
 
 ```
 
-## UX Documentation
+# Architecture
+
+# Use-cases
+
+# UX Documentation
 
 This section describes the User Experience (UX) of the TourPlanner application.
 It provides an overview of the UI elements and illustrates how users can interact with the application.
 
-### Wireframe UI elements
+## Wireframe UI elements
 ![Picture UI elements](TPUIelements.png)
 
 | Label               | Description                                              |
@@ -53,11 +57,23 @@ It provides an overview of the UI elements and illustrates how users can interac
 | **T Log Details**  | Input fields to add or update a specific tour log                      |
  
 
-### User/Interactive Flow Wireframe  
+## User/Interactive Flow Wireframe  
 ![Pic Wireframe](TPWireframe.png)
 
 
+# Library decisions
+In this section the library used in this project are explained
 
+## Libraries
+
+
+# Design pattern
+
+# Unit-Tets
+
+# Tracked time
+
+# See the code on Github
 
 
 
