@@ -65,7 +65,10 @@ public class TourPlannerService {
         if(checkEmptyTour(updatedTour)) throw new TourIncompleteException("Please enter all the required data");
         this.routeService.calculateRouteInfo(updatedTour);
         this.routeService.updateRoute(updatedTour);
+
+        log.info("updating Tour");
         this.tourRepository.save(updatedTour);
+        log.info("update finished");
     }
 
     public void deleteTour(Tour tour) throws TourLogsNotEmptyException {
@@ -116,8 +119,10 @@ public class TourPlannerService {
      * according to that the childfriendliness is then calculated, this is how I took it from the specification
      * @param tour
      */
-    @SneakyThrows //try catch not needed because in this case tour cannot be incomplete
     public void calculateAttributes(Tour tour) {
+        // Start measuring execution time
+        long startTime = System.nanoTime();
+
         List<TourLog> tourLogs = this.tourLogRepository.findByTour(tour);
 
         // --- Popularity calculation ---
@@ -205,7 +210,19 @@ public class TourPlannerService {
         double childFriendliness = (difficultyScore+timeScore+distanceScore)/3;
 
         tour.setChildFriendliness(childFriendliness);
-        this.updateTour(tour);
+        try {
+            this.updateTour(tour);
+        } catch (TourIncompleteException | InvalidAddressException e) {
+            log.error("Error while calculating attributes");
+        }
+        // Stop measuring execution time
+        long endTime = System.nanoTime();
+
+        // Calculate the execution time in milliseconds
+        long executionTime
+                = (endTime - startTime) / 1000000;
+
+        log.info("Calculation attributes took "+ executionTime + "ms");
     }
 
     private boolean checkEmptyTour(Tour tour) {

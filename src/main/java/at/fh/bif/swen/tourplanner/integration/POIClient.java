@@ -3,6 +3,8 @@ package at.fh.bif.swen.tourplanner.integration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -12,8 +14,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
 
+@Slf4j
 @Component
 public class POIClient {
+
+    @Value("${openroute.api-key}")
+    private String apikey;
 
     public List<String> getPoi(GeoCoord coord) throws IOException, InterruptedException {
         double lon = coord.longitude();
@@ -45,7 +51,7 @@ public class POIClient {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.openrouteservice.org/pois"))
-                .header("Authorization", "5b3ce3597851110001cf6248850942b00dac413b812f24a0a49af5e9")
+                .header("Authorization", this.apikey)
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(json))
@@ -54,8 +60,8 @@ public class POIClient {
         HttpClient client = HttpClient.newHttpClient();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println("Status: " + response.statusCode());
-        System.out.println(response.body());
+        log.info("Status: ", response.statusCode());
+        log.debug(response.body());
         return parse(response.body());
     }
 

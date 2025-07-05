@@ -40,6 +40,7 @@ public class ReportService {
     private TourRepository tourRepository;
 
     public void generateTourReport(String filename, Tour tour, BufferedImage tourimage) throws Exception {
+        log.info("Generatic Tour report");
         PdfWriter writer = new PdfWriter(new FileOutputStream(filename));
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
@@ -110,6 +111,7 @@ public class ReportService {
     }
 
     public void generateSummaryReport(String filename) throws Exception {
+        log.info("Generatic Tour report");
         List<Tour> tours = tourRepository.findAll();
         List<TourLog> allLogs = logRepository.findAll();
 
