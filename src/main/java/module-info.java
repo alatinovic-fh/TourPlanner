@@ -21,6 +21,8 @@ module at.fh.bif.swen.tourplanner {
     requires spring.web;
     requires jakarta.annotation;
     requires org.slf4j;
+    requires org.apache.logging.log4j.slf4j2.impl;
+
     requires layout;
     requires kernel;
     requires io;
