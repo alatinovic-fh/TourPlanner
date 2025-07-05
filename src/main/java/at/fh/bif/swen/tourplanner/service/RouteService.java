@@ -3,13 +3,17 @@ package at.fh.bif.swen.tourplanner.service;
 import at.fh.bif.swen.tourplanner.integration.DirectionalJSConverter;
 import at.fh.bif.swen.tourplanner.integration.GeoCoord;
 import at.fh.bif.swen.tourplanner.integration.OpenRouteClient;
+import at.fh.bif.swen.tourplanner.integration.POIClient;
 import at.fh.bif.swen.tourplanner.integration.exception.InvalidAddressException;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import com.fasterxml.jackson.databind.JsonNode;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.Duration;
 
 @Slf4j
@@ -18,6 +22,9 @@ public class RouteService {
 
     @Autowired
     private OpenRouteClient openRouteClient;
+
+    @Autowired
+    private POIClient poiClient;
 
     private GeoCoord startCoord;
     private GeoCoord endCoord;
@@ -32,6 +39,10 @@ public class RouteService {
 
     public void updateRoute(Tour tour) throws InvalidAddressException {
         DirectionalJSConverter.exportJS(this.getRouteJSON(tour));
+    }
+
+    public ObservableList<String> loadPoi() throws IOException, InterruptedException {
+        return FXCollections.observableArrayList(poiClient.getPoi(this.endCoord));
     }
 
     private void updateCoords(Tour tour) throws InvalidAddressException {

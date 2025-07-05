@@ -41,6 +41,9 @@
                      </font></Label>
                     </VBox>
                 </Tab>
+                <Tab text="POI">
+                    <fx:include source="poi_list.fxml" />
+                </Tab>
                 <Tab text="Tour Logs">
                     <fx:include source="manage_tourlogs.fxml" />
                 </Tab>
