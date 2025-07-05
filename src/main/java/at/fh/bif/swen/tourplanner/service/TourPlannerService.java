@@ -120,6 +120,8 @@ public class TourPlannerService {
      * @param tour
      */
     public void calculateAttributes(Tour tour) {
+        log.info("Logger implementation: {}", log.getClass().getName());
+
         // Start measuring execution time
         long startTime = System.nanoTime();
 
