@@ -56,7 +56,8 @@ public class TourPlannerViewModel {
 ```
 
 
-# Use-cases
+# Use-case
+![UseCaseDiagramm](TourPlanner_UseCaseDiagramm.png)
 
 # UX Documentation
 

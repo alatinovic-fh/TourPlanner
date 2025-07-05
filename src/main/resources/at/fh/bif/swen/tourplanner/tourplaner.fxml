@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
 
-<BorderPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.TourPlanerController">
+<BorderPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.TourPlanerController">
 
     <top>
         <VBox>
@@ -37,7 +37,7 @@
                   <Label fx:id="tourDataLabel" alignment="TOP_LEFT" prefHeight="325.0" prefWidth="833.0" VBox.vgrow="ALWAYS">
 
                      <font>
-                        <Font size="25.0" />
+                        <Font size="20.0" />
                      </font></Label>
                     </VBox>
                 </Tab>
@@ -56,7 +56,7 @@
 
     <left>
         <VBox>
-         <Button fx:id="refreshTourList" mnemonicParsing="false" onAction="#onRefreshClick" text="Refresh Tourlist"/>
+         <Button fx:id="refreshTourList" mnemonicParsing="false" onAction="#onRefreshClick" text="Refresh Tourlist" />
             <TextField fx:id="searchField" promptText="Search">
                 <padding>
                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
