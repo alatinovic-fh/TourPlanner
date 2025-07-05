@@ -59,22 +59,34 @@ public class RouteService {
     }
 
     private Duration getDuration(JsonNode route) {
-        long duration = route
-                .get("features").get(0)
-                .get("properties")
-                .get("segments").get(0)
-                .get("duration").asLong();
+        try {
+            long duration = route
+                    .get("features").get(0)
+                    .get("properties")
+                    .get("segments").get(0)
+                    .get("duration").asLong();
 
         return Duration.ofSeconds(duration);
+        } catch (Exception e){
+            log.error("ERROR: while finding duration");
+            e.printStackTrace();
+            return Duration.ofSeconds(0);
+        }
     }
 
     private long getDistance(JsonNode route) {
-        long distance = route
-                .get("features").get(0)
-                .get("properties")
-                .get("segments").get(0)
-                .get("distance").asLong();
+        try {
+            long distance = route
+                    .get("features").get(0)
+                    .get("properties")
+                    .get("segments").get(0)
+                    .get("distance").asLong();
 
-        return distance/1000;
+            return distance / 1000;
+        } catch (Exception e){
+            log.error("ERROR: while finding distance");
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
