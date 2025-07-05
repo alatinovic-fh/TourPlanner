@@ -33,6 +33,29 @@ The project is structured using a clear and conventional package organization, t
 
 ![UML-TourPlanner](UML.png)
 
+# Design pattern
+## Observer Pattern
+* StringProperty, ObjectProperty, ObservableList implement the observer pattern.
+* UI components listen for changes and auto-update.
+
+In our TourPlannerViewModel
+```java
+searchQuery.addListener((obs, oldVal, newVal) -> filterTours());
+```
+In our TourLogViewModel
+```java
+ObservableList<TourLog> allTourLogs = FXCollections.observableArrayList();
+```
+
+## Singleton
+With the help of the SpringAnnotations like @Service, it is ensured
+that only one instance exists across the app lifecycle.
+```java
+@Component
+public class TourPlannerViewModel {
+```
+
+
 # Use-cases
 
 # UX Documentation
@@ -89,8 +112,8 @@ We chose iText because it provides a powerful and flexible API for generating an
 Why did we use this:
 * Fine-grained control over layout and styling.
 * Reliable and well-documented.
+* Supports advanced features like tables, images, fonts, and metadata.
 
-Supports advanced features like tables, images, fonts, and metadata.
 ## @Slf4j (Logging with Lombok)
 We use @Slf4j, a Lombok annotation, to automatically inject a Logger instance (log) into our classes using Simple Logging Facade for Java (SLF4J). This standardizes logging and makes it easy to output debug, info, or error messages without manual logger setup.
 
@@ -99,8 +122,18 @@ Why did we use this:
 * Avoids manual logger instantiation (e.g., LoggerFactory.getLogger(...)).
 * Encourages consistent logging practices across the project.
 * Simplifies debugging and traceability of runtime behavior.
+* Works seamlessly with logging frameworks like Logback or Log4j.
 
-Works seamlessly with logging frameworks like Logback or Log4j.
+## Log4j 2 (Logging Implementation)
+While @Slf4j provides a generic logging interface, we chose Log4j 2 as the actual logging implementation behind the scenes. Log4j 2 is a powerful, high-performance logging framework that integrates easily with SLF4J.
+
+Why did we use this:
+
+* More performant and flexible than the default Spring Boot logger (Logback).
+* Fully compatible with SLF4J and Lombok’s @Slf4j.
+* Customizable via log4j2.xml for console, file, or rolling log outputs.
+
+
 ## Lombok (Code Simplification)
 We integrated Lombok to reduce boilerplate code such as getters, setters, constructors, equals, hashCode, and toString methods. It enhances code readability and maintainability by automatically generating these common methods via annotations like @Getter, @Setter, @Data, and @AllArgsConstructor.
 
@@ -108,13 +141,37 @@ Why did we use this:
 * Cleaner and more readable codebase.
 * Fewer lines of repetitive code.
 
-# Design pattern
-
 # Unit-Tests
+We used JUnit 5 and Mockito to write unit tests that verify the core functionality of our application. The goal was to ensure correctness, stability, and maintainability of the business logic.
+
+## TourPlannerServiceTest
+* Tests core features like adding, updating, filtering, and deleting tours and logs.
+* Validates input and exception handling.
+* Ensures correct calculation of popularity and child-friendliness.
+* Verifies interaction with the RouteService and repositories.
+
+## RouteServiceTest
+* Covers logic for calculating routes and loading POIs via mocked API responses.
+* Verifies distance/time parsing from external JSON.
+* Ensures the system handles invalid addresses gracefully.
+
+## ImportExportServiceTest
+* Tests import/export of tours and logs in JSON format.
+* Ensures data is saved and restored correctly.
+* Verifies ID resets and object associations.
+
+## OpenRouteClientTest
+* Integration test using real address data with OpenRoute API.
+* Validates geolocation and routing accuracy.
+* Confirms correct API interaction and parsing.
 
 # Tracked time
+The implementation of this project took us arround 60 hours.
+Mostly the troubleshooting and research took up the most time.
 
 # See the code on Github
+https://github.com/alatinovic-fh/TourPlanner
+
 
 
 
