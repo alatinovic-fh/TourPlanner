@@ -1,19 +1,23 @@
 package at.fh.bif.swen.tourplanner.viewmodel;
 
+import at.fh.bif.swen.tourplanner.integration.exception.InvalidAddressException;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.service.ImportExportService;
 import at.fh.bif.swen.tourplanner.service.ReportService;
 import at.fh.bif.swen.tourplanner.service.RouteService;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
+import at.fh.bif.swen.tourplanner.service.exception.TourIncompleteException;
 import javafx.application.HostServices;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -57,26 +61,21 @@ public class TourPlannerViewModel {
     }
 
     public void addTour(Tour tour) {
-        tourPlannerService.addTour(tour);
-        allTours.add(tour);
-        filterTours();
+        try {
+            tourPlannerService.addTour(tour);
+            allTours.add(tour);
+            filterTours();
+        }catch (InvalidAddressException | TourIncompleteException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while adding new tour");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
+        }
     }
 
     public void filterTours() {
         filteredTours.setAll(tourPlannerService.filterTours(allTours, searchQuery.get()));
-    }
-
-
-    public StringProperty searchQueryProperty() {
-        return searchQuery;
-    }
-
-    public StringProperty tourDetailsProperty() {
-        return tourDetails;
-    }
-
-    public ObjectProperty<Tour> selectedTourProperty() {
-        return selectedTourProperty;
     }
 
     public void setSelectedTour(Tour tour) {
@@ -95,10 +94,18 @@ public class TourPlannerViewModel {
     }
 
     public void loadMap(Tour tour) {
-        this.tourPlannerService.loadMap(tour);
+        try {
+            this.tourPlannerService.loadMap(tour);
+        }catch (InvalidAddressException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while loading new tour");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
+        }
     }
 
-    public void createTourReport(HostServices hostServices, boolean isSummary) {
+    public void createTourReport(HostServices hostServices, boolean isSummary, BufferedImage tourimage) {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save PDF Report");
@@ -109,7 +116,7 @@ public class TourPlannerViewModel {
                 if(isSummary) {
                     this.reportService.generateSummaryReport(file.getAbsolutePath());
                 } else {
-                    this.reportService.generateTourReport(file.getAbsolutePath(), this.selectedTour);
+                    this.reportService.generateTourReport(file.getAbsolutePath(), this.selectedTour, tourimage);
                 }
                 hostServices.showDocument(file.getAbsolutePath());
             }
@@ -132,7 +139,7 @@ public class TourPlannerViewModel {
             if (file != null) {
                 this.importExportService.exportTourToJson(file.getAbsolutePath(), this.selectedTour);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error while exporting tour-data.");
@@ -150,7 +157,7 @@ public class TourPlannerViewModel {
             if (file != null) {
                 this.importExportService.importTourFromJson(file.getAbsolutePath());
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error while importing tour-data.");
@@ -158,5 +165,17 @@ public class TourPlannerViewModel {
             alert.showAndWait();
         }
         this.refreshTourList();
+    }
+
+    public StringProperty searchQueryProperty() {
+        return searchQuery;
+    }
+
+    public StringProperty tourDetailsProperty() {
+        return tourDetails;
+    }
+
+    public ObjectProperty<Tour> selectedTourProperty() {
+        return selectedTourProperty;
     }
 }

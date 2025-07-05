@@ -5,6 +5,7 @@ import at.fh.bif.swen.tourplanner.persistence.entity.TourLog;
 import at.fh.bif.swen.tourplanner.persistence.repository.TourLogRepository;
 import at.fh.bif.swen.tourplanner.persistence.repository.TourRepository;
 import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -12,17 +13,18 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.UnitValue;
+import java.io.ByteArrayOutputStream;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -37,7 +39,8 @@ public class ReportService {
     @Autowired
     private TourRepository tourRepository;
 
-    public void generateTourReport(String filename, Tour tour) throws Exception {
+    public void generateTourReport(String filename, Tour tour, BufferedImage tourimage) throws Exception {
+        log.info("Generatic Tour report");
         PdfWriter writer = new PdfWriter(new FileOutputStream(filename));
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
@@ -58,6 +61,18 @@ public class ReportService {
         document.add(new Paragraph("Estimated Time: " + formatDuration(tour.getEstimatedTime())).setFontSize(12));
 
         document.add(new Paragraph("\n"));
+
+        //Tour Image
+        // Encode BufferedImage to byte[]
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(tourimage, "png", baos);
+        baos.flush();
+        byte[] imageBytes = baos.toByteArray();
+        baos.close();
+
+        Image image = new Image(ImageDataFactory.create(imageBytes));
+        image.setAutoScale(true);
+        document.add(image);
 
         // Tour Logs Table Header
         Paragraph logHeader = new Paragraph("Tour Logs")
@@ -84,7 +99,7 @@ public class ReportService {
         for (TourLog log : this.logRepository.findByTour(tour)) {
             table.addCell(log.getDate().format(dateFormatter));
             table.addCell(log.getComment());
-            table.addCell(log.getDifficulty());
+            table.addCell(log.getDifficulty()+"");
             table.addCell(String.format("%.2f", log.getTotalDistance()));
             table.addCell(formatDuration(log.getTotalTime()));
             table.addCell(String.valueOf(log.getRating()));
@@ -96,6 +111,7 @@ public class ReportService {
     }
 
     public void generateSummaryReport(String filename) throws Exception {
+        log.info("Generatic Tour report");
         List<Tour> tours = tourRepository.findAll();
         List<TourLog> allLogs = logRepository.findAll();
 

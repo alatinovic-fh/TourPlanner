@@ -30,7 +30,7 @@ public class TourLog {
     private String comment;
 
     @Column(name = "difficulty")
-    private String difficulty;
+    private int difficulty;
 
     @Column(name = "totalDistance")
     private double totalDistance;
@@ -39,14 +39,14 @@ public class TourLog {
     private Duration totalTime;
 
     @Column(name = "rating")
-    private double rating;
+    private int rating;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "tour_id", nullable = false)
     @JsonIgnore
     private Tour tour;
 
-    public TourLog(LocalDate date, String comment, String difficulty, double totalDistance, Duration totalTimeLong, double rating){
+    public TourLog(LocalDate date, String comment, int difficulty, double totalDistance, Duration totalTimeLong, int rating){
         this.date = date;
         this.comment = comment;
         this.difficulty = difficulty;

@@ -1,10 +1,14 @@
 package at.fh.bif.swen.tourplanner.viewmodel;
 
+import at.fh.bif.swen.tourplanner.integration.exception.InvalidAddressException;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.persistence.entity.TransportType;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
 
+import at.fh.bif.swen.tourplanner.service.exception.TourIncompleteException;
+import at.fh.bif.swen.tourplanner.service.exception.TourLogsNotEmptyException;
 import javafx.beans.property.*;
+import javafx.scene.control.Alert;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -67,20 +71,37 @@ public class ManageTourViewModel {
     }
 
     public void saveChanges() {
-        this.selectedTour.setDescription(tourDescription.get());
-        this.selectedTour.setName(tourName.get());
-        this.selectedTour.setFromLocation(tourFrom.get());
-        this.selectedTour.setToLocation(tourTo.get());
-        this.selectedTour.setEstimatedTime(Duration.ofMinutes(30));
-        service.updateTour(selectedTour);
-        saved.set(true);
+        try {
+            this.selectedTour.setDescription(tourDescription.get());
+            this.selectedTour.setName(tourName.get());
+            this.selectedTour.setFromLocation(tourFrom.get());
+            this.selectedTour.setToLocation(tourTo.get());
+            this.selectedTour.setEstimatedTime(Duration.ofMinutes(30));
+            this.selectedTour.setType(tourTransportType.get());
+            service.updateTour(selectedTour);
+            saved.set(true);
+        }catch(InvalidAddressException | TourIncompleteException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while changing tour.");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
+        }
     }
 
     public void deleteSelectedTour() {
         if (selectedTour != null) {
-            service.deleteTour(selectedTour);
-            deleted.set(true);
-            selectedTour = null;
+            try {
+                service.deleteTour(selectedTour);
+                deleted.set(true);
+                selectedTour = null;
+            }catch (TourLogsNotEmptyException e){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error while deleting tour.");
+                alert.setContentText(e.getLocalizedMessage());
+                alert.showAndWait();
+            }
         }
     }
 

@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.14-internal" fx:controller="at.fh.bif.swen.tourplanner.view.ManageTourController">
+<VBox xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.bif.swen.tourplanner.view.ManageTourController">
 
     <Label text="Name:" />
     <TextField fx:id="nameField" />
@@ -12,10 +12,10 @@
     <TextField fx:id="descriptionField" />
 
     <Label text="From:" />
-    <TextField fx:id="fromField" />
+    <TextField fx:id="fromField" promptText="e.g. Teststraße 12, 1200 Wien" />
 
     <Label text="To:" />
-    <TextField fx:id="toField" />
+    <TextField fx:id="toField" promptText="e.g. Teststraße 12, 1200 Wien" />
 
     <Label text="Transport Type:" />
     <ComboBox fx:id="transportCombo" />

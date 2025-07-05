@@ -13,6 +13,40 @@
         <Button onAction="#onDeleteLog" text="Delete Log" />
         <Button onAction="#onSaveChanges" text="Save Changes" />
     </ToolBar>
+    <TitledPane collapsible="false" text="Log Details">
+        <GridPane hgap="10" vgap="5">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="100" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="30.0" />
+                <RowConstraints minHeight="30.0" />
+                <RowConstraints minHeight="30.0" />
+                <RowConstraints minHeight="30.0" />
+            <RowConstraints />
+            </rowConstraints>
+
+            <Label text="Comment:" />
+            <TextField fx:id="commentField" GridPane.columnIndex="1" />
+
+            <Label text="Difficulty:" GridPane.rowIndex="1" />
+            <TextField fx:id="difficultyField" promptText="value from 1-5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Distance (km):" GridPane.rowIndex="2" />
+            <TextField fx:id="distanceField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <Label text="Time (in minutes):" GridPane.rowIndex="3" />
+            <TextField fx:id="durationField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+            <Label text="Rating:" GridPane.rowIndex="4" />
+            <TextField fx:id="ratingField" promptText="value from 1-5" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        </GridPane>
+    </TitledPane>
+   <TextField fx:id="searchTourLogField" promptText="Search" />
     <TableView fx:id="tourLogTable" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="dateColumn" text="Date" />
@@ -26,33 +60,4 @@
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
     </TableView>
-    <TitledPane collapsible="false" text="Log Details">
-        <GridPane hgap="10" vgap="5">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-            <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" minWidth="100" />
-                <ColumnConstraints hgrow="ALWAYS" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="30" />
-                <RowConstraints minHeight="30" />
-                <RowConstraints minHeight="30" />
-                <RowConstraints minHeight="30" />
-            </rowConstraints>
-
-            <Label text="Comment:" />
-            <TextField fx:id="commentField" GridPane.columnIndex="1" />
-
-            <Label text="Difficulty:" GridPane.rowIndex="1" />
-            <TextField fx:id="difficultyField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-            <Label text="Distance (km):" GridPane.rowIndex="2" />
-            <TextField fx:id="distanceField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-            <Label text="Time (HH:mm):" GridPane.rowIndex="3" />
-            <TextField fx:id="durationField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        </GridPane>
-    </TitledPane>
 </VBox>

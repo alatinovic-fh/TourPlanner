@@ -3,9 +3,15 @@ package at.fh.bif.swen.tourplanner.viewmodel;
 import at.fh.bif.swen.tourplanner.persistence.entity.Tour;
 import at.fh.bif.swen.tourplanner.persistence.entity.TourLog;
 import at.fh.bif.swen.tourplanner.service.TourPlannerService;
+import at.fh.bif.swen.tourplanner.service.exception.InvalidRatingOrDifficultyException;
+import at.fh.bif.swen.tourplanner.service.exception.InvalidTimeOrDistanceExcpetion;
+import at.fh.bif.swen.tourplanner.service.exception.TourLogCommentMissingException;
+import at.fh.bif.swen.tourplanner.service.exception.TourNotSelectedException;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -15,12 +21,17 @@ import java.time.LocalDate;
 public class TourLogViewModel {
     private final TourPlannerService service;
 
+    @Getter
+    private final ObservableList<TourLog> filteredTourLogs = FXCollections.observableArrayList();
+    private final StringProperty searchQuery = new SimpleStringProperty("");
+
     ObservableList<TourLog> allTourLogs = FXCollections.observableArrayList();
 
     private final StringProperty comment = new SimpleStringProperty("");
     private final StringProperty difficulty = new SimpleStringProperty("");
     private final StringProperty totalDistance = new SimpleStringProperty("");
     private final StringProperty totalTime = new SimpleStringProperty("");
+    private final StringProperty rating = new SimpleStringProperty("");
     private final BooleanProperty savedLog = new SimpleBooleanProperty(false);
     private final BooleanProperty deletedLog = new SimpleBooleanProperty(false);
     private final BooleanProperty addedLog = new SimpleBooleanProperty(false);
@@ -31,44 +42,89 @@ public class TourLogViewModel {
 
     public TourLogViewModel(TourPlannerService service) {
         this.service = service;
+        this.searchQuery.addListener((obs, oldVal, newVal) -> filterTourLogs());
 
+    }
+
+    public void filterTourLogs() {
+        filteredTourLogs.setAll(service.filterTourLogs(allTourLogs, searchQuery.get()));
     }
 
     public void addTourLog() {
         double totalDistanceDouble = 0;
+        int difficultyInteger = 0;
         long totalTimeLong = 0;
+        int ratingInteger = 0;
         try{
             totalDistanceDouble = Double.parseDouble(totalDistance.get());
             totalTimeLong = Long.parseLong(totalTime.get());
+            difficultyInteger = Integer.parseInt(difficulty.get());
+            ratingInteger = Integer.parseInt(rating.get());
+            TourLog newTourLog = new TourLog(LocalDate.now(),comment.get(), difficultyInteger, totalDistanceDouble, Duration.ofMinutes(totalTimeLong), ratingInteger);
+            service.addTourLog(newTourLog, this.selectedTour);
+            allTourLogs.add(newTourLog);
+            filterTourLogs();
+            service.calculateAttributes(this.selectedTour);
+            this.addedLog.set(true);
         }catch (NumberFormatException e){
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while adding tourlog.");
+            alert.setContentText("Please enter a valid number");
+            alert.showAndWait();
+        }catch (TourNotSelectedException | InvalidRatingOrDifficultyException | InvalidTimeOrDistanceExcpetion | TourLogCommentMissingException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while adding tourlog.");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
         }
-        TourLog newTourLog = new TourLog(LocalDate.now(),comment.get(), difficulty.get(), totalDistanceDouble, Duration.ofMinutes(totalTimeLong), 1);
-        allTourLogs.add(newTourLog);
-        service.addTourLog(newTourLog, this.selectedTour);
-        this.addedLog.set(true);
+
     }
 
     public void saveChanges() {
+        if(selectedTourLog == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while adding tourlog.");
+            alert.setContentText("Please select a tourlog or add a tourlog first.");
+            alert.showAndWait();
+            return;
+        }
         double totalDistanceDouble = 0;
         long totalTimeLong = 0;
+        int difficultyInteger = 0;
+        int ratingInteger = 0;
         try{
             totalDistanceDouble = Double.parseDouble(totalDistance.get());
             totalTimeLong = Long.parseLong(totalTime.get());
+            difficultyInteger = Integer.parseInt(difficulty.get());
+            ratingInteger = Integer.parseInt(rating.get());
+            //this.selectedTourLog.setTour(selectedTour);
+            this.selectedTourLog.setDate(selectedTourLog.getDate());
+            this.selectedTourLog.setComment(comment.get());
+            this.selectedTourLog.setDifficulty(difficultyInteger);
+            this.selectedTourLog.setTotalDistance(totalDistanceDouble);
+            this.selectedTourLog.setTotalTime(Duration.ofMinutes(totalTimeLong));
+            this.selectedTourLog.setRating(ratingInteger);
+            service.updateTourLog(this.selectedTourLog, selectedTour);
+            service.calculateAttributes(selectedTour);
+            savedLog.set(true);
         }catch (NumberFormatException e){
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while adding tourlog.");
+            alert.setContentText("Please enter a valid number");
+            alert.showAndWait();
+        }catch (InvalidRatingOrDifficultyException | InvalidTimeOrDistanceExcpetion | TourLogCommentMissingException | TourNotSelectedException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while adding tourlog.");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
         }
 
-        this.selectedTourLog.setTour(selectedTour);
-        this.selectedTourLog.setDate(selectedTourLog.getDate());
-        this.selectedTourLog.setComment(comment.get());
-        this.selectedTourLog.setDifficulty(difficulty.get());
-        this.selectedTourLog.setTotalDistance(totalDistanceDouble);
-        this.selectedTourLog.setTotalTime(Duration.ofMinutes(totalTimeLong));
-        this.selectedTourLog.setRating(selectedTourLog.getRating());
 
-        service.updateTourLog(this.selectedTourLog);
-        savedLog.set(true);
     }
 
     public void deleteSelectedTourLog() {
@@ -76,6 +132,7 @@ public class TourLogViewModel {
             service.deleteTourLog(this.selectedTourLog, this.selectedTour);
             deletedLog.set(true);
             selectedTourLog = null;
+            service.calculateAttributes(this.selectedTour);
         }
     }
 
@@ -83,7 +140,8 @@ public class TourLogViewModel {
         if (this.service.loadTourLogs(this.selectedTour) != null) {
             this.allTourLogs.setAll(this.service.loadTourLogs(this.selectedTour));
         }
-        return this.allTourLogs;
+        filterTourLogs();
+        return this.filteredTourLogs;
     }
 
     public void bindToSelectedTourProperty(ReadOnlyObjectProperty<Tour> selectedTourProperty) {
@@ -126,18 +184,24 @@ public class TourLogViewModel {
     public BooleanProperty addedLogProperty() {
         return addedLog;
     }
+    public StringProperty ratingProperty(){
+        return rating;
+    }
+    public StringProperty searchQueryProperty(){
+        return searchQuery;
+    }
 
     public void setSelectedTourLog(TourLog selectedTourLog) {
 
         comment.set(selectedTourLog.getComment());
-        difficulty.set(selectedTourLog.getDifficulty());
+        difficulty.set(selectedTourLog.getDifficulty()+"");
         totalDistance.set(String.valueOf(selectedTourLog.getTotalDistance()));
+        rating.set(String.valueOf(selectedTourLog.getRating()));
 
         //Parse Duration to String format
         Duration duration = selectedTourLog.getTotalTime();
         long minutes = duration.toMinutes();
         totalTime.set(String.valueOf(minutes));
-
         this.selectedTourLog = selectedTourLog;
 
     }

@@ -1,5 +1,6 @@
 package at.fh.bif.swen.tourplanner.integration;
 
+import at.fh.bif.swen.tourplanner.integration.exception.InvalidAddressException;
 import at.fh.bif.swen.tourplanner.persistence.entity.TransportType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -35,7 +36,7 @@ public class OpenRouteClient {
         this.restTemplate = new RestTemplate();
     }
 
-    public GeoCoord geoCoord(String location){
+    public GeoCoord geoCoord(String location) throws InvalidAddressException {
 
         try{
             location = URLEncoder.encode(location,"UTF-8");
@@ -64,13 +65,13 @@ public class OpenRouteClient {
                 } catch (Exception e) {
                     e.printStackTrace();
                     log.error("Failed to parse REST Response: " + e.getMessage());
-                    return null;
+                    throw new InvalidAddressException("Go to ManageTour and check your addresses. Please only use valid addresses.");
                 }
 
             }
             else {
                 log.error("Failed to parse REST Response: " + response.body());
-                return null;
+                throw new InvalidAddressException("Go to ManageTour and check your addresses. Please only use valid addresses.");
             }
         } catch (IOException | InterruptedException e) {
             log.error(e.getMessage());
@@ -78,7 +79,7 @@ public class OpenRouteClient {
         }
     }
 
-    public JsonNode getRoute(TransportType type, GeoCoord start, GeoCoord end) {
+    public JsonNode getRoute(TransportType type, GeoCoord start, GeoCoord end) throws InvalidAddressException {
 
         NumberFormat formatter = NumberFormat.getNumberInstance(Locale.UK);
         formatter.setMaximumFractionDigits(6);
@@ -100,8 +101,8 @@ public class OpenRouteClient {
                 JsonNode route = mapper.readTree(response.body());
                 return route;
             } else {
-                log.error("Failed to parse REST Response: " + response.body());
-                return null;
+                log.error("Failed to parse REST Response");
+                throw new InvalidAddressException("Go to ManageTour and check your addresses. Please only use valid addresses.");
             }
 
         } catch (IOException | InterruptedException e) {

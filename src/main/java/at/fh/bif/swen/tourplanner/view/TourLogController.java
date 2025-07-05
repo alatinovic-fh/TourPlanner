@@ -3,6 +3,7 @@ package at.fh.bif.swen.tourplanner.view;
 import at.fh.bif.swen.tourplanner.persistence.entity.TourLog;
 import at.fh.bif.swen.tourplanner.viewmodel.TourLogViewModel;
 import at.fh.bif.swen.tourplanner.viewmodel.TourPlannerViewModel;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,10 +20,13 @@ public class TourLogController {
 
     @FXML private TableView<TourLog> tourLogTable;
 
+    @FXML private TextField searchTourLogField;
+
     @FXML private TextField commentField;
     @FXML private TextField difficultyField;
     @FXML private TextField distanceField;
     @FXML private TextField durationField;
+    @FXML private TextField ratingField;
 
     @FXML private TableColumn<TourLog, String> dateColumn;
     @FXML private TableColumn<TourLog, String> commentColumn;
@@ -40,16 +44,18 @@ public class TourLogController {
 
     @FXML
     public void initialize() {
-        tourLogTable.setItems(this.tourLogViewModel.reloadTourLogs());
+        tourLogTable.setItems(this.tourLogViewModel.getFilteredTourLogs());
         commentField.textProperty().bindBidirectional(tourLogViewModel.commentProperty());
         difficultyField.textProperty().bindBidirectional(tourLogViewModel.difficultyProperty());
         distanceField.textProperty().bindBidirectional(tourLogViewModel.totalDistanceProperty());
         durationField.textProperty().bindBidirectional(tourLogViewModel.totalTimeProperty());
+        ratingField.textProperty().bindBidirectional(tourLogViewModel.ratingProperty());
         tourLogViewModel.bindToSelectedTourProperty(viewModel.selectedTourProperty());
+        Bindings.bindBidirectional(searchTourLogField.textProperty(), tourLogViewModel.searchQueryProperty());
 
         dateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDate().toString()));
         commentColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getComment()));
-        difficultyColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDifficulty()));
+        difficultyColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDifficulty()+""));
         distanceColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getTotalDistance())));
         durationColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDuration(data.getValue().getTotalTime())));
         ratingColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getRating())));

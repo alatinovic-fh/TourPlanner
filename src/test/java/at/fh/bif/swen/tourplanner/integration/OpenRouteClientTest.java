@@ -1,7 +1,9 @@
 package at.fh.bif.swen.tourplanner.integration;
 
 import at.fh.bif.swen.tourplanner.config.OpenRouteConfig;
+import at.fh.bif.swen.tourplanner.integration.exception.InvalidAddressException;
 import at.fh.bif.swen.tourplanner.persistence.entity.TransportType;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +24,7 @@ class OpenRouteClientTest {
     private OpenRouteClient openRouteClient;
 
     @Test
-    void geoCoord_whenFHTWpostal_thenFHTWGeoCoords() {
+    void geoCoord_whenFHTWpostal_thenFHTWGeoCoords() throws InvalidAddressException {
 
         //ARRANGE
         String postalAddress = "Höchstädtplatz 6, 1200 Wien";
@@ -38,7 +40,7 @@ class OpenRouteClientTest {
 
 
     @Test
-    void geoCoord_whenZanonipostal_thenZanoniGeoCoords() {
+    void geoCoord_whenZanonipostal_thenZanoniGeoCoords() throws InvalidAddressException {
         // Arrange
         String postalAddress = "Rotenturmstrasse 1, 1010 Wien";
 
@@ -58,7 +60,12 @@ class OpenRouteClientTest {
         GeoCoord zanoni = new GeoCoord(16.372924, 48.209379);
 
         // Act
-        var result = openRouteClient.getRoute(TransportType.CAR,fhtw,zanoni);
+        JsonNode result = null;
+        try {
+            result = openRouteClient.getRoute(TransportType.CAR,fhtw,zanoni);
+        } catch (InvalidAddressException e) {
+            System.out.println(e.getMessage());
+        }
 
         // Assert
         assertNotNull(result);
